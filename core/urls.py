@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 
 web_patterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     # resume_builder web URLs
     path('web/', include('resume_builder.web.urls')),
     path('web/', include('accounts.web.urls')),

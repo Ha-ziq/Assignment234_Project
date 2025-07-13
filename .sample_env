@@ -1,9 +1,0 @@
-# .env.example
-DB_NAME=database_name
-DB_USER=username
-DB_PASSWORD=password123
-DB_HOST=localhost
-DB_PORT=5432
-SECRET_KEY=django-insecure-yd4gj5gbma&rb0p0gdaea4c_)d@6_hf(!%h*u(zod%12b(h+48
-DEBUG=TRUE
-ALLOWED_HOSTS=*

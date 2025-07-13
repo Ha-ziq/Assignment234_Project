@@ -1,15 +1,24 @@
 {% extends 'resume_base.html' %}
-
-{% block title %}
-detail Work Experience—Resume Builder
-{% endblock %}
-
-{% block extra_head %}
-{% endblock %}
+{% load static %}
 
 {% block content %}
-<div class="container">
-  <h1>Implement Your Logic here</h1>
-  <p>work experience detail</p>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h4>Work Experience Detail</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Job Title:</strong> {{ object.job_title }}</p>
+            <p><strong>Company:</strong> {{ object.company_name }}</p>
+            <p><strong>Start Date:</strong> {{ object.start_date }}</p>
+            <p><strong>End Date:</strong> {{ object.end_date|default:"Present" }}</p>
+            <p><strong>Description:</strong></p>
+            <p>{{ object.description }}</p>
+
+            <a href="{% url 'work_experience_update' object.pk %}" class="btn btn-warning">Edit</a>
+            <a href="{% url 'work_experience_delete' object.pk %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'work_experience_list' %}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

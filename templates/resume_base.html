@@ -58,7 +58,15 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item d-flex align-items-center" href="{% url 'account_email' %}"><i class="bi bi-person"></i><span>My Account</span></a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item d-flex align-items-center" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-right"></i><span>Sign Out</span></a></li>
+            <li>
+              <form method="post" action="{% url 'account_logout' %}">
+                 {% csrf_token %}
+               <button type="submit" class="dropdown-item d-flex align-items-center" style="background: none; border: none;">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+               </button>
+              </form>
+            </li>
           </ul>
         </li>
       </ul>
