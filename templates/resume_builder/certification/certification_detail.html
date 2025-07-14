@@ -1,0 +1,14 @@
+{% extends "resume_base.html" %}
+{% block title %}Certification Detail{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{{ certification.name }}</h2>
+  <p><strong>Issuer:</strong> {{ certification.issuer }}</p>
+  <p><strong>Issued:</strong> {{ certification.issue_date }}</p>
+  <p><strong>Expires:</strong> {{ certification.expiration_date }}</p>
+  <p><strong>Credential ID:</strong> {{ certification.credential_id }}</p>
+  <p><strong>URL:</strong> <a href="{{ certification.verification_url }}">{{ certification.verification_url }}</a></p>
+  <a href="{% url 'certification_update' certification.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'certification_delete' certification.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

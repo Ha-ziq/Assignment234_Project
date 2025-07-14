@@ -11,6 +11,7 @@
       <span>
         <a href="{% url 'education_update' edu.pk %}" class="btn btn-sm btn-warning">Edit</a>
         <a href="{% url 'education_delete' edu.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        <a href="{% url 'education_detail' edu.pk %}" class="btn btn-sm btn-warning">Detail</a>
       </span>
     </li>
   {% empty %}

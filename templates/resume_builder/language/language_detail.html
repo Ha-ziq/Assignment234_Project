@@ -1,0 +1,11 @@
+{% extends "resume_base.html" %}
+{% block title %}Language Detail{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{{ language.name }}</h2>
+  <p><strong>Proficiency:</strong> {{ language.get_proficiency_display }}</p>
+  <p><strong>Certification:</strong> {{ language.certification }}</p>
+  <a href="{% url 'language_update' language.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'language_delete' language.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

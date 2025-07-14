@@ -1,0 +1,17 @@
+{% extends "resume_base.html" %}
+{% block title %}Languages{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Languages</h2>
+  <a href="{% url 'language_create' %}" class="btn btn-primary">Add Language</a>
+  <ul>
+    {% for language in languages %}
+      <li>
+        <a href="{% url 'language_detail' language.pk %}">{{ language.name }} ({{ language.get_proficiency_display }})</a>
+      </li>
+    {% empty %}
+      <li>No languages added.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

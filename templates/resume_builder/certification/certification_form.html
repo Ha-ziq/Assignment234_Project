@@ -1,0 +1,12 @@
+{% extends "resume_base.html" %}
+{% block title %}Add/Edit Certification{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Certification</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+</div>
+{% endblock %}

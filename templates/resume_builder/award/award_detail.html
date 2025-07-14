@@ -1,0 +1,13 @@
+{% extends "resume_base.html" %}
+{% block title %}Award Detail{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{{ award.title }}</h2>
+  <p><strong>Issuer:</strong> {{ award.issuer }}</p>
+  <p><strong>Issue Date:</strong> {{ award.issue_date }}</p>
+  <p><strong>Category:</strong> {{ award.get_category_display }}</p>
+  <p><strong>Description:</strong> {{ award.description }}</p>
+  <a href="{% url 'award_update' award.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'award_delete' award.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

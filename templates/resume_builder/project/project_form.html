@@ -1,0 +1,25 @@
+{% extends "resume_base.html" %}
+{% block title %}Add/Edit Project{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{{ form.instance.pk|yesno:"Edit Project,Add New Project" }}</h2>
+  <form method="post">
+    {% if form.errors %}
+  <div class="alert alert-danger">
+    <ul>
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <li>{{ field|capfirst }}: {{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

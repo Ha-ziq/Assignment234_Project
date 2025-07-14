@@ -1,0 +1,15 @@
+{% extends "resume_base.html" %}
+{% block title %}Skill Detail{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>{{ skill.technology.name }}</h2>
+  <p><strong>Proficiency:</strong> {{ skill.get_proficiency_display }}</p>
+  <p><strong>Years of Experience:</strong> {{ skill.years_experience }}</p>
+  <p><strong>Last Used:</strong> {{ skill.last_used }}</p>
+  <p><strong>Project Count:</strong> {{ skill.project_count }}</p>
+  
+  <a href="{% url 'technical_skill_update' skill.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'technical_skill_delete' skill.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

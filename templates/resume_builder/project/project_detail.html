@@ -1,0 +1,22 @@
+{% extends "resume_base.html" %}
+{% block title %}Project Detail{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>{{ project.title }}</h2>
+  <p><strong>Role:</strong> {{ project.role }}</p>
+  <p><strong>Description:</strong> {{ project.description }}</p>
+  <p><strong>Start:</strong> {{ project.start_date }} | <strong>End:</strong> {{ project.end_date|default:"Present" }}</p>
+  <p><strong>Technologies:</strong>
+    {% for tech in project.technologies.all %}
+      <span class="badge bg-info text-dark">{{ tech.name }}</span>
+    {% empty %}
+      None
+    {% endfor %}
+  </p>
+  {% if project.url %}
+    <p><strong>URL:</strong> <a href="{{ project.url }}" target="_blank">{{ project.url }}</a></p>
+  {% endif %}
+  <a href="{% url 'project_update' project.pk %}" class="btn btn-warning">Edit</a>
+  <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

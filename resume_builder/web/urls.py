@@ -4,7 +4,12 @@ from .views import (
     WorkExperienceListView, WorkExperienceCreateView, WorkExperienceUpdateView,
     WorkExperienceDeleteView, WorkExperienceDetailView, EducationListView, EducationDetailView,
     EducationCreateView, EducationUpdateView, EducationDeleteView,ResumePreviewView,ResumeListView,
-    ResumeCreateView
+    ResumeCreateView,TechnicalSkillListView,TechnicalSkillCreateView,TechnicalSkillDetailView,
+    TechnicalSkillUpdateView,TechnicalSkillDeleteView,ProjectListView, ProjectDetailView, ProjectCreateView,
+    ProjectUpdateView, ProjectDeleteView,CertificationListView,CertificationCreateView,CertificationDetailView,
+    CertificationUpdateView,CertificationDeleteView,AwardListView, AwardCreateView, AwardDetailView, AwardUpdateView, AwardDeleteView,
+    LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, LanguageDeleteView
+
 )
 
 urlpatterns = [
@@ -25,5 +30,36 @@ urlpatterns = [
     path('education/<int:pk>/', EducationDetailView.as_view(), name='education_detail'),
     path('education/<int:pk>/edit/', EducationUpdateView.as_view(), name='education_update'),
     path('education/<int:pk>/delete/', EducationDeleteView.as_view(), name='education_delete'),
+#urls for technical skills
+    path('skills/', TechnicalSkillListView.as_view(), name='technical_skill_list'),
+    path('skills/add/', TechnicalSkillCreateView.as_view(), name='technical_skill_create'),
+    path('skills/<int:pk>/', TechnicalSkillDetailView.as_view(), name='technical_skill_detail'),
+    path('skills/<int:pk>/edit/', TechnicalSkillUpdateView.as_view(), name='technical_skill_update'),
+    path('skills/<int:pk>/delete/', TechnicalSkillDeleteView.as_view(), name='technical_skill_delete'),
+# URLs for projects
+    path('projects/', ProjectListView.as_view(), name='project_list'),
+    path('projects/add/', ProjectCreateView.as_view(), name='project_create'),
+    path('projects/<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
+    path('projects/<int:pk>/edit/', ProjectUpdateView.as_view(), name='project_update'),
+    path('projects/<int:pk>/delete/', ProjectDeleteView.as_view(), name='project_delete'),
+# URLs for certificates
+    path('certifications/', CertificationListView.as_view(), name='certification_list'),
+    path('certifications/add/', CertificationCreateView.as_view(), name='certification_create'),
+    path('certifications/<int:pk>/', CertificationDetailView.as_view(), name='certification_detail'),
+    path('certifications/<int:pk>/edit/', CertificationUpdateView.as_view(), name='certification_update'),
+    path('certifications/<int:pk>/delete/', CertificationDeleteView.as_view(), name='certification_delete'),
+# Award URLs
+    path('awards/', AwardListView.as_view(), name='award_list'),
+    path('awards/add/', AwardCreateView.as_view(), name='award_create'),
+    path('awards/<int:pk>/', AwardDetailView.as_view(), name='award_detail'),
+    path('awards/<int:pk>/edit/', AwardUpdateView.as_view(), name='award_update'),
+    path('awards/<int:pk>/delete/', AwardDeleteView.as_view(), name='award_delete'),
+# Language URLs
+    path('languages/', LanguageListView.as_view(), name='language_list'),
+    path('languages/add/', LanguageCreateView.as_view(), name='language_create'),
+    path('languages/<int:pk>/', LanguageDetailView.as_view(), name='language_detail'),
+    path('languages/<int:pk>/edit/', LanguageUpdateView.as_view(), name='language_update'),
+    path('languages/<int:pk>/delete/', LanguageDeleteView.as_view(), name='language_delete'),
+
 ]
 

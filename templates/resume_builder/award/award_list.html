@@ -1,0 +1,17 @@
+{% extends "resume_base.html" %}
+{% block title %}Awards{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Awards</h2>
+  <a href="{% url 'award_create' %}" class="btn btn-primary">Add Award</a>
+  <ul>
+    {% for award in awards %}
+      <li>
+        <a href="{% url 'award_detail' award.pk %}">{{ award.title }} - {{ award.issuer }}</a>
+      </li>
+    {% empty %}
+      <li>No awards yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

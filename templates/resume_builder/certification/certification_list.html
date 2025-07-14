@@ -1,0 +1,17 @@
+{% extends "resume_base.html" %}
+{% block title %}Certifications{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Your Certifications</h2>
+  <a href="{% url 'certification_create' %}" class="btn btn-primary">Add Certification</a>
+  <ul>
+    {% for cert in certifications %}
+      <li>
+        <a href="{% url 'certification_detail' cert.pk %}">{{ cert.name }} - {{ cert.issuer }}</a>
+      </li>
+    {% empty %}
+      <li>No certifications added yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
