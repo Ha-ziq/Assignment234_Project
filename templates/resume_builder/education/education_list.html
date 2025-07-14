@@ -1,0 +1,20 @@
+{% extends "resume_base.html" %}
+{% block content %}
+<h2 class="mb-3">Your Education</h2>
+<a href="{% url 'education_create' %}" class="btn btn-primary mb-3">+ Add Education</a>
+<ul class="list-group">
+  {% for edu in educations %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <a href="{% url 'education_detail' edu.pk %}">
+        {{ edu.degree }} - {{ edu.institution }} ({{ edu.start_date }} to {{ edu.end_date }})
+      </a>
+      <span>
+        <a href="{% url 'education_update' edu.pk %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'education_delete' edu.pk %}" class="btn btn-sm btn-danger">Delete</a>
+      </span>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No education entries yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

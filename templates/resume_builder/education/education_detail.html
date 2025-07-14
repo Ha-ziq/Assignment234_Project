@@ -1,0 +1,13 @@
+{% extends "resume_base.html" %}
+{% block content %}
+<h2>{{ object.degree }} – {{ object.institution }}</h2>
+<p><strong>Location:</strong> {{ object.location }}</p>
+<p><strong>From:</strong> {{ object.start_date }} <strong>To:</strong> {{ object.end_date }}</p>
+{% if object.gpa %}
+<p><strong>GPA:</strong> {{ object.gpa }}</p>
+{% endif %}
+<p>{{ object.description }}</p>
+<a href="{% url 'education_update' object.pk %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'education_delete' object.pk %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'education_list' %}" class="btn btn-secondary">Back</a>
+{% endblock %}
