@@ -8,11 +8,15 @@ from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,Tec
 #view for resume
 class ResumePreviewView(LoginRequiredMixin, DetailView):
     model = Resume
-    template_name = 'resume_builder/resume_preview.html'
     context_object_name = 'resume'
+
+    def get_template_names(self):
+        template_type = self.get_object().template.format_type.lower()
+        return [f"resume_builder/resume/{template_type}_preview.html"]
 
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
+
     
 class ResumeListView(LoginRequiredMixin, ListView):
     model = Resume
