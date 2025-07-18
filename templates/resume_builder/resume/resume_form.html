@@ -2,11 +2,76 @@
 {% block content %}
 <div class="container my-4">
   <h2>Create Resume</h2>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    {# Title Field #}
+    <div class="form-group">
+      {{ form.title.label_tag }}
+      {{ form.title }}
+    </div>
+
+    {# Summary Field #}
+    <div class="form-group">
+      {{ form.summary.label_tag }}
+      {{ form.summary }}
+    </div>
+
+    {# Tags Field (optional) #}
+    <div class="form-group">
+      {{ form.tags.label_tag }}
+      {{ form.tags }}
+    </div>
+
+    {# Template Dropdown with Preview #}
+    <div class="form-group">
+      {{ form.template.label_tag }}
+      {{ form.template }}
+
+      <!-- Template Preview -->
+      <div id="template-preview-container" style="margin-top: 15px;">
+        <img id="template-preview" src="" alt="Template Preview"
+             style="max-width: 100%; display: none; border: 1px solid #ccc; padding: 5px;" />
+      </div>
+    </div>
+
+    {# Visibility Field #}
+    <div class="form-group">
+      {{ form.visibility.label_tag }}
+      {{ form.visibility }}
+    </div>
+
     <button type="submit" class="btn btn-success">Save</button>
     <a href="{% url 'resume_list' %}" class="btn btn-secondary">Cancel</a>
   </form>
 </div>
+
+<!-- JS to dynamically preview selected template -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const templateSelect = document.getElementById("id_template");
+    const previewImage = document.getElementById("template-preview");
+
+    const templateThumbnails = {
+      {% for template in templates %}
+"{{ template.pk }}": "{% if template.thumbnail %}{{ template.thumbnail.url }}{% else %}/static/images/no-preview.png{% endif %}",
+      {% endfor %}
+    };
+
+    function updatePreview() {
+      const selectedValue = templateSelect.value;
+      const thumbnailUrl = templateThumbnails[selectedValue];
+      if (thumbnailUrl) {
+        previewImage.src = thumbnailUrl;
+        previewImage.style.display = 'block';
+      } else {
+        previewImage.src = "";
+        previewImage.style.display = 'none';
+      }
+    }
+
+    templateSelect.addEventListener("change", updatePreview);
+    updatePreview();
+  });
+</script>
 {% endblock %}

@@ -1,5 +1,6 @@
 # resume_builder/forms.py
 from django import forms
+from django.utils.text import slugify
 from .models import (
     ResumeTemplate, Resume, ResumeSection, WorkExperience,
     TechnicalSkill, Education, Technology, Project,
@@ -14,7 +15,8 @@ class ResumeTemplateForm(forms.ModelForm):
 class ResumeForm(forms.ModelForm):
     class Meta:
         model = Resume
-        fields = ['title', 'slug', 'summary', 'tags', 'template', 'language', 'visibility']
+        fields = ['title', 'summary', 'tags', 'template']  # Only user-editable fields
+
 
 class ResumeSectionForm(forms.ModelForm):
     class Meta:

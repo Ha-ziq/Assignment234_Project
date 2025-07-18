@@ -8,7 +8,7 @@ from .views import (
     TechnicalSkillUpdateView,TechnicalSkillDeleteView,ProjectListView, ProjectDetailView, ProjectCreateView,
     ProjectUpdateView, ProjectDeleteView,CertificationListView,CertificationCreateView,CertificationDetailView,
     CertificationUpdateView,CertificationDeleteView,AwardListView, AwardCreateView, AwardDetailView, AwardUpdateView, AwardDeleteView,
-    LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, LanguageDeleteView
+    LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, LanguageDeleteView, ResumeDeleteView
 
 )
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('resume/<int:pk>/preview/', ResumePreviewView.as_view(), name='resume_preview'),
     path('resumes/', ResumeListView.as_view(), name='resume_list'),
     path('resumes/add/', ResumeCreateView.as_view(), name='resume_create'),
+    path('resumes/<int:pk>/delete/', ResumeDeleteView.as_view(), name='resume_delete'), 
 
 #urls for work experience
     path('work-experience/', WorkExperienceListView.as_view(), name='work_experience_list'),

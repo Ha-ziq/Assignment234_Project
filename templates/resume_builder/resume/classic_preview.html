@@ -1,0 +1,29 @@
+{% extends "resume_base.html" %}
+{% block content %}
+<div class="container my-5">
+  <h1 class="text-center">{{ resume.title }}</h1>
+  <hr>
+  <h4>Summary</h4>
+  <p>{{ resume.summary }}</p>
+
+  <h4>Work Experience</h4>
+  {% for experience in resume.workexperience_set.all %}
+    <div>
+      <strong>{{ experience.position }}</strong> at {{ experience.company }} ({{ experience.start_date }} - {{ experience.end_date|default:"Present" }})
+      <p>{{ experience.description }}</p>
+    </div>
+  {% empty %}
+    <p>No experience added yet.</p>
+  {% endfor %}
+
+  <h4>Education</h4>
+  {% for education in resume.education_set.all %}
+    <div>
+      <strong>{{ education.degree }}</strong> - {{ education.institution }} ({{ education.start_date }} - {{ education.end_date|default:"Present" }})
+      <p>{{ education.description }}</p>
+    </div>
+  {% empty %}
+    <p>No education added yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

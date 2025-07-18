@@ -1,8 +1,9 @@
 # Python
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language
+from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language,ResumeTemplate
 from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,TechnicalSkillForm,ProjectForm,CertificationForm,AwardForm,LanguageForm
 
 #view for resume
@@ -26,15 +27,41 @@ class ResumeListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
 
+class ResumeDeleteView(LoginRequiredMixin, DeleteView):
+    model = Resume
+    success_url = reverse_lazy('resume_list')
+
+    def get_queryset(self):
+        return Resume.objects.filter(user=self.request.user)
+    
 class ResumeCreateView(LoginRequiredMixin, CreateView):
     model = Resume
     form_class = ResumeForm
     template_name = 'resume_builder/resume/resume_form.html'
     success_url = reverse_lazy('resume_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['templates'] = ResumeTemplate.objects.filter(is_active=True)
+        return context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+
+        # Generate slug from title
+        if not form.instance.slug:
+            form.instance.slug = slugify(form.instance.title)
+
+        # Set default language if not provided
+        if not form.instance.language:
+            form.instance.language = 'en'
+
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        print("❌ Resume form invalid:", form.errors)
+        return super().form_invalid(form)
+
 
 
 #views for work exoerience
