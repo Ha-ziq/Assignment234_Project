@@ -5,10 +5,12 @@ from .views import (
     WorkExperienceDeleteView, WorkExperienceDetailView, EducationListView, EducationDetailView,
     EducationCreateView, EducationUpdateView, EducationDeleteView,ResumePreviewView,ResumeListView,
     ResumeCreateView,TechnicalSkillListView,TechnicalSkillCreateView,TechnicalSkillDetailView,
-    TechnicalSkillUpdateView,TechnicalSkillDeleteView,ProjectListView, ProjectDetailView, ProjectCreateView,
-    ProjectUpdateView, ProjectDeleteView,CertificationListView,CertificationCreateView,CertificationDetailView,
-    CertificationUpdateView,CertificationDeleteView,AwardListView, AwardCreateView, AwardDetailView, AwardUpdateView, AwardDeleteView,
-    LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, LanguageDeleteView, ResumeDeleteView
+    TechnicalSkillUpdateView,TechnicalSkillDeleteView,ProjectListView, ProjectDetailView,
+    ProjectCreateView,ProjectUpdateView, ProjectDeleteView,CertificationListView,
+    CertificationCreateView,CertificationDetailView,CertificationUpdateView,CertificationDeleteView,
+    AwardListView, AwardCreateView, AwardDetailView, AwardUpdateView, AwardDeleteView,
+    LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, 
+    LanguageDeleteView, ResumeDeleteView, ResumeDownloadView
 
 )
 
@@ -62,5 +64,7 @@ urlpatterns = [
     path('languages/<int:pk>/edit/', LanguageUpdateView.as_view(), name='language_update'),
     path('languages/<int:pk>/delete/', LanguageDeleteView.as_view(), name='language_delete'),
 
+#resume download url
+    path('resume/<slug:slug>/download/', ResumeDownloadView.as_view(), name='resume_download'),
 ]
 

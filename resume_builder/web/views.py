@@ -2,9 +2,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+import re
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language,ResumeTemplate
 from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,TechnicalSkillForm,ProjectForm,CertificationForm,AwardForm,LanguageForm
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+from django.shortcuts import get_object_or_404
 
 #view for resume
 class ResumePreviewView(LoginRequiredMixin, DetailView):
@@ -61,6 +67,45 @@ class ResumeCreateView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         print("❌ Resume form invalid:", form.errors)
         return super().form_invalid(form)
+
+#resume download view
+
+
+
+
+class ResumeDownloadView(View):
+    def get(self, request, slug):
+        resume = get_object_or_404(Resume, slug=slug, user=request.user)
+        print("Resume template in DB:", resume.template.name)  # <-- Fix here
+
+        # Step 1: Define mapping from template name to actual file
+        TEMPLATE_MAP = {
+    "Classic": "classic_preview.html",
+    "Modern": "modern_preview.html",
+    "Technical": "technical_preview.html",
+    "Creative": "creative_preview.html",
+}
+
+        template_name_from_db = resume.template.name  # <-- Fix here
+        file_name = TEMPLATE_MAP.get(template_name_from_db)
+
+        if not file_name:
+            return HttpResponse(f"Template not found for: {template_name_from_db}", status=404)
+
+        # Step 3: Render and generate PDF
+        template_path = f"resume_builder/resume/{file_name}"
+        html_string = render_to_string(template_path, {"resume": resume})
+
+        from io import BytesIO
+
+        pdf_file = BytesIO()
+        HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(pdf_file)
+        pdf_file.seek(0)
+
+        response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{resume.slug}.pdf"'
+        return response
+       
 
 
 
