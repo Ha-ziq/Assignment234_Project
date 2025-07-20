@@ -1,4 +1,4 @@
-{% extends "resume_base.html" %}
+{% comment %} {% extends "resume_base.html" %}
 {% block content %}
 <div class="container my-5">
   <h1 class="text-center">{{ resume.title }}</h1>
@@ -26,4 +26,89 @@
     <p>No education added yet.</p>
   {% endfor %}
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ resume.title }}</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 40px;
+      color: #222;
+    }
+
+    h1 {
+      text-align: center;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #444;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .job-title {
+      font-weight: bold;
+    }
+
+    .date-range {
+      font-style: italic;
+      color: #666;
+      float: right;
+    }
+
+    p {
+      margin: 4px 0 10px 0;
+    }
+
+    .entry {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>{{ resume.title }}</h1>
+
+  <div class="section">
+    <h2>Summary</h2>
+    <p>{{ resume.summary }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Work Experience</h2>
+    {% for experience in resume.workexperience_set.all %}
+      <div class="entry">
+        <div class="job-title">{{ experience.position }} at {{ experience.company }}</div>
+        <div class="date-range">{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</div>
+        <p>{{ experience.description }}</p>
+      </div>
+    {% empty %}
+      <p>No experience added yet.</p>
+    {% endfor %}
+  </div>
+
+  <div class="section">
+    <h2>Education</h2>
+    {% for education in resume.education_set.all %}
+      <div class="entry">
+        <div class="job-title">{{ education.degree }} - {{ education.institution }}</div>
+        <div class="date-range">{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
+        <p>{{ education.description }}</p>
+      </div>
+    {% empty %}
+      <p>No education added yet.</p>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

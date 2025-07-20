@@ -1,4 +1,4 @@
-{% extends "resume_base.html" %}
+{% comment %} {% extends "resume_base.html" %}
 {% block title %}{{ resume.title }} – Preview{% endblock %}
 
 {% block content %}
@@ -174,4 +174,146 @@
   {% endif %}
 
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Resume - {{ resume.title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 30%;
+            background-color: #f7e5d4;
+            padding: 30px 20px;
+            box-sizing: border-box;
+        }
+        .main {
+            width: 70%;
+            padding: 40px;
+            background: #fff;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 28px;
+            margin: 0;
+            text-transform: uppercase;
+            color: #333;
+        }
+        h2 {
+            font-size: 16px;
+            margin-top: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .job-title, .degree {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .meta {
+            font-size: 12px;
+            color: #777;
+        }
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            margin: 5px 0 10px;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            background: #b89f8e;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>Contact</h2>
+        <ul>
+            <li>{{ resume.user.email }}</li>
+            <li>{{ resume.user.username }}</li>
+        </ul>
+
+        <h2>Education</h2>
+        {% for education in resume.education_set.all %}
+            <div class="section">
+                <div class="degree">{{ education.degree }}</div>
+                <div class="meta">{{ education.institution }}<br>{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
+            </div>
+        {% endfor %}
+
+        <h2>Expertise</h2>
+        <ul>
+        {% for skill in resume.technicalskill_set.all %}
+            <li>{{ skill.name }}</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Interests</h2>
+        <ul>
+            <li>Reading</li>
+            <li>Design</li>
+            <li>Music</li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h1>{{ resume.title }}</h1>
+        <p>{{ resume.summary }}</p>
+
+        <h2>Experience</h2>
+        {% for experience in resume.workexperience_set.all %}
+            <div class="section">
+                <div class="job-title">{{ experience.position }} - {{ experience.company }}</div>
+                <div class="meta">{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</div>
+                <p>{{ experience.description }}</p>
+            </div>
+        {% endfor %}
+
+        <h2>Certifications</h2>
+        {% for cert in resume.certification_set.all %}
+            <div class="section">
+                <div class="job-title">{{ cert.name }}</div>
+                <div class="meta">{{ cert.issuing_organization }} | {{ cert.issue_date }}</div>
+            </div>
+        {% endfor %}
+
+        <h2>Awards</h2>
+        {% for award in resume.award_set.all %}
+            <div class="section">
+                <div class="job-title">{{ award.title }}</div>
+                <div class="meta">{{ award.issuer }} | {{ award.date_awarded }}</div>
+                <p>{{ award.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

@@ -6,11 +6,14 @@ import re
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language,ResumeTemplate
 from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,TechnicalSkillForm,ProjectForm,CertificationForm,AwardForm,LanguageForm
-from django.http import HttpResponse
+from django.http import HttpResponse,FileResponse,Http404
 from django.template.loader import render_to_string
 from weasyprint import HTML
 import tempfile
 from django.shortcuts import get_object_or_404
+from io import BytesIO
+
+
 
 #view for resume
 class ResumePreviewView(LoginRequiredMixin, DetailView):
@@ -70,43 +73,44 @@ class ResumeCreateView(LoginRequiredMixin, CreateView):
 
 #resume download view
 
-
-
-
 class ResumeDownloadView(View):
     def get(self, request, slug):
         resume = get_object_or_404(Resume, slug=slug, user=request.user)
-        print("Resume template in DB:", resume.template.name)  # <-- Fix here
+        template_name_from_db = resume.template.name if resume.template else None
+        print("Resume template in DB:", template_name_from_db)
 
-        # Step 1: Define mapping from template name to actual file
+        # Template mapping
         TEMPLATE_MAP = {
-    "Classic": "classic_preview.html",
-    "Modern": "modern_preview.html",
-    "Technical": "technical_preview.html",
-    "Creative": "creative_preview.html",
-}
+            "Classic": "classic_preview.html",
+            "Modern": "modern_preview.html",
+            "Technical": "technical_preview.html",
+            "Creative": "creative_preview.html",
+        }
 
-        template_name_from_db = resume.template.name  # <-- Fix here
         file_name = TEMPLATE_MAP.get(template_name_from_db)
-
         if not file_name:
-            return HttpResponse(f"Template not found for: {template_name_from_db}", status=404)
+            raise Http404(f"No template found for: {template_name_from_db}")
 
-        # Step 3: Render and generate PDF
+        # Render HTML
         template_path = f"resume_builder/resume/{file_name}"
         html_string = render_to_string(template_path, {"resume": resume})
 
-        from io import BytesIO
+        # Generate PDF and write to temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
+            HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(temp_file.name)
+            temp_file.flush()
 
-        pdf_file = BytesIO()
-        HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(pdf_file)
-        pdf_file.seek(0)
+        # Return downloadable response
+        return FileResponse(
+            open(temp_file.name, 'rb'),
+            as_attachment=True,
+            filename=f"{resume.slug}.pdf",
+            content_type='application/pdf'
+        )
 
-        response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="{resume.slug}.pdf"'
-        return response
+
+  
        
-
 
 
 #views for work exoerience
@@ -118,20 +122,6 @@ class WorkExperienceListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return WorkExperience.objects.filter(resume__user=self.request.user)
-
-# class WorkExperienceCreateView(LoginRequiredMixin, CreateView):
-#     model = WorkExperience
-#     form_class = WorkExperienceForm
-#     template_name = 'resume_builder/work_experience/work_experience_form.html'
-#     success_url = reverse_lazy('work_experience_list')
-
-#     def form_valid(self, form):
-#         # Ensure the resume belongs to the user
-#         resume = form.cleaned_data['resume']
-#         if resume.user != self.request.user:
-#             form.add_error('resume', 'You do not own this resume.')
-#             return self.form_invalid(form)
-#         return super().form_valid(form)
 
 class WorkExperienceCreateView(LoginRequiredMixin, CreateView):
     model = WorkExperience
