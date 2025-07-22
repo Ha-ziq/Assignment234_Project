@@ -41,8 +41,17 @@
               <label class="form-check-label" for="{{ form.is_visible.id_for_label }}">Visible</label>
             </div>
             <div class="d-flex gap-3 justify-content-end mt-4">
-              <button type="submit" class="btn btn-success px-4 py-2 rounded-3 fw-semibold">Save</button>
+              <!--previous save button-->
+            <!-- <button type="submit" class="btn btn-success px-4 py-2 rounded-3 fw-semibold">Save</button> --> 
+
+
+             <!--new save button that will allow to save datain database also redirection-->
+           <div class="d-flex gap-3 justify-content-end mt-4">
+              <a  href="{% url 'education_list' %}" type="submit" class="btn btn-success px-4 py-2 rounded-3 fw-semibold">Save</a>
               <a href="{% url 'education_list' %}" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold">Cancel</a>
+            </div>
+
+            
             </div>
           <!--add project button so we can move from education to add project-->
           <div class="row mt-4">

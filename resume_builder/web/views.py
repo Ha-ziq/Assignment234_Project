@@ -20,6 +20,19 @@ from io import BytesIO
 
 
 
+# class ResumePreviewView(DetailView):
+#   model = Resume
+#  context_object_name = 'resume'
+
+# def get_template_names(self):
+#  template_type = self.get_object().template.format_type.lower()
+# return [f"resume_builder/resume/{template_type}_preview.html"]
+
+#def get_queryset(self):
+#return Resume.objects.filter(user=self.request.user)
+
+
+#previous resume preview .
 class ResumePreviewView(DetailView):
     model = Resume
     context_object_name = 'resume'
@@ -31,7 +44,26 @@ class ResumePreviewView(DetailView):
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
 
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        resume = self.get_object()  # The current resume object
+        
+     #    Add all associated sections to the context
+        context['work_experience'] = resume.work_experiences.all()
+        context['education'] = resume.educations.all()
+        context['projects'] = resume.projects.all()
+        context['technical_skills'] = resume.technical_skills.all()
+        context['certifications'] = resume.certifications.all()
+        context['awards'] = resume.awards.all()
+        context['languages'] = resume.languages.all()
+        
+         #Add any other sections if necessary (e.g., 'resume.sections.all()' for custom sections)
+        return context
+
+# now adding resume preview i updaet url if this does not work go into url pattern remove theis preview and remove url from url pattern in views.py
+
+
+
 class ResumeListView(LoginRequiredMixin, ListView):
     model = Resume
     template_name = 'resume_builder/resume/resume_list.html'
@@ -46,7 +78,10 @@ class ResumeDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
-    
+
+
+#previous resumecreate view which use primary key
+
 class ResumeCreateView(CreateView):
     model = Resume
     form_class = ResumeForm
@@ -57,7 +92,7 @@ class ResumeCreateView(CreateView):
         context['templates'] = ResumeTemplate.objects.all()  # Pass the templates
         # Check if the object exists before trying to access its pk
         if self.object:  # If the object is already created (POST request)
-            context['resume_pk'] = self.object.pk  # Pass the resume_pk for use in URLs
+           context['resume_pk'] = self.object.pk  # Pass the resume_pk for use in URLs
         else:
             context['resume_pk'] = None  # For GET request, no resume has been created yet
         return context
@@ -80,7 +115,21 @@ class ResumeCreateView(CreateView):
             return reverse_lazy('resume_preview', kwargs={'pk': self.object.pk})
         return reverse_lazy('resume_list')  # fallback
 
+#this code will allow add education to submit thhe form which will keep data in database also it will redirect me to education_list.html
+class EducationCreateView(LoginRequiredMixin, CreateView):
+    model = Education
+    form_class = EducationForm
+    template_name = 'resume_builder/education/education_form.html'
+    success_url = reverse_lazy('education_list')  # Redirect after successful save
 
+    def form_valid(self, form):
+        # Automatically assign the resume that belongs to the user
+        user_resumes = Resume.objects.filter(user=self.request.user)
+        if not user_resumes.exists():
+            form.add_error(None, "You must create a resume before adding education.")
+            return self.form_invalid(form)
+        form.instance.resume = user_resumes.first()  # Assign the resume to the education
+        return super().form_valid(form)
 #resume download view
 
 class ResumeDownloadView(View):
@@ -194,22 +243,40 @@ class EducationDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Education.objects.filter(resume__user=self.request.user)
+# previous add education create view
+#class EducationCreateView(LoginRequiredMixin, CreateView):
+#    model = Education
+#    form_class = EducationForm
+#    template_name = 'resume_builder/education/education_form.html'
+#    success_url = reverse_lazy('education_list')
 
+#   def form_valid(self, form):
+#        # Automatically assign resume
+#        user_resumes = Resume.objects.filter(user=self.request.user)
+#        if not user_resumes.exists():
+#            form.add_error(None, "You must create a resume before adding education.")
+#            return self.form_invalid(form)
+
+#       form.instance.resume = user_resumes.first()  # assign resume directly
+#         return super().form_valid(form)
+
+#new add education create view
+#this code will allow add education to submit thhe form which will keep data in database also it will redirect me to education_list.html
 class EducationCreateView(LoginRequiredMixin, CreateView):
     model = Education
     form_class = EducationForm
     template_name = 'resume_builder/education/education_form.html'
-    success_url = reverse_lazy('education_list')
+    success_url = reverse_lazy('education_list')  # Redirect after successful save
 
     def form_valid(self, form):
-        # Automatically assign resume
+        # Automatically assign the resume that belongs to the user
         user_resumes = Resume.objects.filter(user=self.request.user)
         if not user_resumes.exists():
             form.add_error(None, "You must create a resume before adding education.")
             return self.form_invalid(form)
-
-        form.instance.resume = user_resumes.first()  # assign resume directly
+        form.instance.resume = user_resumes.first()  # Assign the resume to the education
         return super().form_valid(form)
+    
 
 
 class EducationUpdateView(LoginRequiredMixin, UpdateView):

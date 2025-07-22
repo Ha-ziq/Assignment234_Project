@@ -47,14 +47,11 @@
             <div class="d-flex gap-3 justify-content-end mt-4">
               <button type="submit" class="btn btn-success px-4 py-2 rounded-3 fw-semibold">Save</button>
               <a href="{% url 'resume_list' %}" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold">Cancel</a>
-        {% if resume_pk %}
-          <a href="{% url 'education_create' resume_pk=resume_pk %}" class="btn btn-info px-4 py-2 rounded-3 fw-semibold">
-             Add Education
-          </a>
-        {% endif %}
+      
 
             </div>
-  
+           <!-- Link to Add Education without resume_pk -->
+    <a href="{% url 'education_create' %}" class="btn btn-info mt-3">Add Education</a>
             </div>
           </div>
           </form>

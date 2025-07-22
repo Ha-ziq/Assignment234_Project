@@ -14,11 +14,16 @@ from .views import (
 
 )
 
+
 urlpatterns = [
 #url for resume
   
     path('resumes/', ResumeListView.as_view(), name='resume_list'),
     path('resumes/add/', ResumeCreateView.as_view(), name='resume_create'),
+ # URL for the resume list page
+    path('resumes/', ResumeListView.as_view(), name='resume_list'),
+    
+#url for resume    
    path('resume/<int:pk>/preview/', ResumePreviewView.as_view(), name='resume_preview'),
    path('resumes/<int:pk>/delete/', ResumeDeleteView.as_view(), name='resume_delete'),
     # other paths...
@@ -31,7 +36,8 @@ urlpatterns = [
     path('work-experience/<int:pk>/', WorkExperienceDetailView.as_view(), name='work_experience_detail'),
 #urls for education
     path('education/', EducationListView.as_view(), name='education_list'),
- path('education/add/<int:resume_pk>/', EducationCreateView.as_view(), name='education_create'),
+ path('education/add/', EducationCreateView.as_view(), name='education_create'),
+
 
     path('education/<int:pk>/', EducationDetailView.as_view(), name='education_detail'),
     path('education/<int:pk>/edit/', EducationUpdateView.as_view(), name='education_update'),
