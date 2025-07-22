@@ -2,7 +2,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-import re
+from django.shortcuts import render
+# import re
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language,ResumeTemplate
 from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,TechnicalSkillForm,ProjectForm,CertificationForm,AwardForm,LanguageForm
@@ -556,3 +557,24 @@ class LanguageDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Language.objects.filter(resume__user=self.request.user)
+
+
+#view for showing the user template designs 
+from django.http import Http404
+from django.views import View
+
+class TemplatePreviewView(View):
+    def get(self, request):
+        template_map = {
+            "Classic": "resume_builder/resume/classic_preview.html",
+            "Modern": "resume_builder/resume/modern_preview.html",
+            "Creative": "resume_builder/resume/creative_preview.html",
+            "Technical": "resume_builder/resume/technical_preview.html",
+        }
+        selected_template = request.GET.get("template")
+        template_path = template_map.get(selected_template)
+
+        if not template_path:
+            raise Http404("Invalid template name")
+
+        return render(request, template_path)
