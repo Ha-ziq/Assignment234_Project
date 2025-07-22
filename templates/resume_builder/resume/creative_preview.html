@@ -82,20 +82,23 @@
 
         <h2>Education</h2>
         {% for education in education %}
-            {% if education.is_visible %}
-                <div class="section">
-                    <div class="degree">{{ education.degree }}</div>
-                    <div class="meta">{{ education.institution }}<br>{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
-                </div>
-            {% endif %}
+            <div class="section">
+                <div class="degree">{{ education.degree }}</div>
+                <div class="meta">{{ education.institution }}<br>{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
+            </div>
         {% endfor %}
 
         <h2>Expertise</h2>
         <ul>
         {% for skill in technical_skills %}
-            {% if skill.is_visible %}
-                <li>{{ skill.name }}</li>
-            {% endif %}
+            <li>{{ skill.technology.name }} – {{ skill.get_proficiency_display }} ({{ skill.years_experience }} yrs)</li>
+        {% endfor %}
+        </ul>
+
+        <h2>Languages</h2>
+        <ul>
+        {% for lang in languages %}
+            <li>{{ lang.name }} – {{ lang.get_proficiency_display }}</li>
         {% endfor %}
         </ul>
 
@@ -120,6 +123,15 @@
             </div>
         {% endfor %}
 
+        <h2>Projects</h2>
+        {% for project in projects %}
+            <div class="section">
+                <div class="job-title">{{ project.title }} – {{ project.role }}</div>
+                <div class="meta">{{ project.start_date }} - {{ project.end_date|default:"Present" }}</div>
+                <p>{{ project.description }}</p>
+            </div>
+        {% endfor %}
+
         <h2>Certifications</h2>
         {% for cert in certifications %}
             <div class="section">
@@ -130,37 +142,12 @@
 
         <h2>Awards</h2>
         {% for award in awards %}
-            {% if award.is_visible %}
-                <div class="section">
-                    <div class="job-title">{{ award.title }}</div>
-                    <div class="meta">{{ award.issuer }} | {{ award.date_awarded }}</div>
-                    <p>{{ award.description }}</p>
-                </div>
-            {% endif %}
+            <div class="section">
+                <div class="job-title">{{ award.title }}</div>
+                <div class="meta">{{ award.issuer }} | {{ award.date_awarded }}</div>
+                <p>{{ award.description }}</p>
+            </div>
         {% endfor %}
-        <h2>Projects</h2>
-{% for project in projects %}
-    <div class="section">
-        <div class="job-title">{{ project.title }} – {{ project.role }}</div>
-        <div class="meta">{{ project.start_date }} to {{ project.end_date|default:"Present" }}</div>
-        <p>{{ project.description }}</p>
-        <div class="tech-tags">
-            {% for tech in project.technologies.all %}
-                <span class="tag">{{ tech.name }}</span>
-            {% endfor %}
-        </div>
-    </div>
-{% endfor %}
-
-<h2>Languages</h2>
-{% for lang in languages %}
-    {% if lang.is_visible %}
-        <div class="section">
-            <div class="meta">{{ lang.name }} – {{ lang.get_proficiency_display }}</div>
-        </div>
-    {% endif %}
-{% endfor %}
-
     </div>
 </div>
 </body>

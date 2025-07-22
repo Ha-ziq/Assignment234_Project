@@ -153,7 +153,17 @@ class ResumeDownloadView(View):
 
         # Render HTML
         template_path = f"resume_builder/resume/{file_name}"
-        html_string = render_to_string(template_path, {"resume": resume})
+        html_string = render_to_string(template_path, {
+        "resume": resume,
+        "education": resume.educations.all(),
+        "experience": resume.work_experiences.all(),
+        "certifications": resume.certifications.all(),
+        "awards": resume.awards.all(),
+        "technical_skills": resume.technical_skills.all(),
+        "projects": resume.projects.all(),
+        "languages": resume.languages.all(),
+})
+
 
         # Generate PDF and write to temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
