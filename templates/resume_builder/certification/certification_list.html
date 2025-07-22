@@ -1,17 +1,46 @@
 {% extends "resume_base.html" %}
 {% block title %}Certifications{% endblock %}
+
 {% block content %}
-<div class="container">
-  <h2>Your Certifications</h2>
-  <a href="{% url 'certification_create' %}" class="btn btn-primary">Add Certification</a>
-  <ul>
-    {% for cert in certifications %}
-      <li>
-        <a href="{% url 'certification_detail' cert.pk %}">{{ cert.name }} - {{ cert.issuer }}</a>
-      </li>
-    {% empty %}
-      <li>No certifications added yet.</li>
-    {% endfor %}
-  </ul>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-8">
+      <div class="card shadow border-0">
+
+        <!-- Header -->
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h4>Your Certifications</h4>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+          <a href="{% url 'certification_create' %}" class="btn btn-primary mb-3">➕ Add Certification</a>
+
+          <ul class="list-group">
+            {% for cert in certifications %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ cert.name }}</strong> from <em>{{ cert.issuer }}</em>
+                </div>
+                <div>
+                  <a href="{% url 'certification_detail' cert.pk %}" class="btn btn-sm btn-info">View</a>
+                  <a href="{% url 'certification_update' cert.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{% url 'certification_delete' cert.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              
+                </div>
+              </li>
+            {% empty %}
+              <li class="list-group-item">No certifications added yet.</li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 d-flex justify-content-end">
+    <a href="{% url 'award_create' %}" class="btn btn-sm btn-success text-white ms-2">🏅 Add Award</a>
+<div>
 </div>
-{% endblock %}
+
+    {% endblock %}

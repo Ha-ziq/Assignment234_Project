@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
   <h2>Projects</h2>
+
   <a href="{% url 'project_create' %}" class="btn btn-primary mb-3">Add New Project</a>
   <ul class="list-group">
     {% for project in projects %}
@@ -18,5 +19,10 @@
       <li class="list-group-item">No projects found.</li>
     {% endfor %}
   </ul>
+  <div class="text-end mb-4">
+  <a href="{% url 'work_experience_create' %}
+" class="btn btn-primary">➕ Add Experience</a>
+</div>
+
 </div>
 {% endblock %}

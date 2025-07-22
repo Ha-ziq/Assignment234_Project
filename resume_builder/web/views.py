@@ -16,7 +16,11 @@ from io import BytesIO
 
 
 #view for resume
-class ResumePreviewView(LoginRequiredMixin, DetailView):
+# resume_builder/views.py
+
+
+
+class ResumePreviewView(DetailView):
     model = Resume
     context_object_name = 'resume'
 
@@ -43,33 +47,39 @@ class ResumeDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
     
-class ResumeCreateView(LoginRequiredMixin, CreateView):
+class ResumeCreateView(CreateView):
     model = Resume
     form_class = ResumeForm
     template_name = 'resume_builder/resume/resume_form.html'
-    success_url = reverse_lazy('resume_list')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['templates'] = ResumeTemplate.objects.filter(is_active=True)
+        context['templates'] = ResumeTemplate.objects.all()  # Pass the templates
+        # Check if the object exists before trying to access its pk
+        if self.object:  # If the object is already created (POST request)
+            context['resume_pk'] = self.object.pk  # Pass the resume_pk for use in URLs
+        else:
+            context['resume_pk'] = None  # For GET request, no resume has been created yet
         return context
 
     def form_valid(self, form):
         form.instance.user = self.request.user
 
-        # Generate slug from title
+        # Properly indented and reachable
         if not form.instance.slug:
             form.instance.slug = slugify(form.instance.title)
 
-        # Set default language if not provided
         if not form.instance.language:
             form.instance.language = 'en'
 
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        print("❌ Resume form invalid:", form.errors)
-        return super().form_invalid(form)
+    # ✅ This MUST be inside the class!
+    def get_success_url(self):
+        if self.object.pk:
+            return reverse_lazy('resume_preview', kwargs={'pk': self.object.pk})
+        return reverse_lazy('resume_list')  # fallback
+
 
 #resume download view
 

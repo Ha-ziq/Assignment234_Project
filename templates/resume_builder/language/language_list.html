@@ -1,17 +1,61 @@
 {% extends "resume_base.html" %}
 {% block title %}Languages{% endblock %}
 {% block content %}
-<div class="container">
-  <h2>Languages</h2>
-  <a href="{% url 'language_create' %}" class="btn btn-primary">Add Language</a>
-  <ul>
-    {% for language in languages %}
-      <li>
-        <a href="{% url 'language_detail' language.pk %}">{{ language.name }} ({{ language.get_proficiency_display }})</a>
-      </li>
-    {% empty %}
-      <li>No languages added.</li>
-    {% endfor %}
-  </ul>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white py-3">
+          <h4 class="mb-0 text-center">Languages</h4>
+        </div>
+
+        <div class="card-body">
+          {% if languages %}
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Proficiency</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for language in languages %}
+                    <tr>
+                      <td>{{ language.name }}</td>
+                      <td>{{ language.get_proficiency_display }}</td>
+                      <td class="text-center">
+                        <a href="{% url 'language_detail' language.pk %}" class="btn btn-sm btn-outline-info">View</a>
+                        <a href="{% url 'language_update' language.pk %}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <a href="{% url 'language_delete' language.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="text-muted">No languages added yet.</p>
+          {% endif %}
+
+          <!-- Buttons Section -->
+          <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'language_create' %}" class="btn btn-success">
+              ➕ Add Language
+            </a>
+
+            {% with resume=languages.0.resume %}
+              {% if resume %}
+                <a href="{% url 'resume_preview' resume.pk %}" class="btn btn-dark">
+                  📄 Preview My Resume
+                </a>
+              {% endif %}
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

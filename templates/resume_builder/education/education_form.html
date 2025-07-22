@@ -1,10 +1,59 @@
 {% extends "resume_base.html" %}
 {% block content %}
-<h2>{% if object %}Edit{% else %}Add{% endif %} Education</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Save</button>
-  <a href="{% url 'education_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-5">
+          <h2 class="mb-4 fw-bold text-center">{% if object %}Edit{% else %}Add{% endif %} Education</h2>
+          <form method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-floating mb-4">
+              {{ form.degree }}
+              <label for="{{ form.degree.id_for_label }}">Degree</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.institution }}
+              <label for="{{ form.institution.id_for_label }}">Institution</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.location }}
+              <label for="{{ form.location.id_for_label }}">Location</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.start_date }}
+              <label for="{{ form.start_date.id_for_label }}">Start Date</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.end_date }}
+              <label for="{{ form.end_date.id_for_label }}">End Date</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.gpa }}
+              <label for="{{ form.gpa.id_for_label }}">GPA</label>
+            </div>
+            <div class="form-floating mb-4">
+              {{ form.description }}
+              <label for="{{ form.description.id_for_label }}">Description</label>
+            </div>
+            <div class="form-check mb-4">
+              {{ form.is_visible }}
+              <label class="form-check-label" for="{{ form.is_visible.id_for_label }}">Visible</label>
+            </div>
+            <div class="d-flex gap-3 justify-content-end mt-4">
+              <button type="submit" class="btn btn-success px-4 py-2 rounded-3 fw-semibold">Save</button>
+              <a href="{% url 'education_list' %}" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold">Cancel</a>
+            </div>
+          <!--add project button so we can move from education to add project-->
+          <div class="row mt-4">
+  <div class="col-12">
+    <a href="{% url 'project_create' %}" class="btn btn-info btn-lg w-100 rounded-3 fw-semibold">Add Project</a>
+  </div>
+</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

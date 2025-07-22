@@ -10,4 +10,11 @@
 <a href="{% url 'education_update' object.pk %}" class="btn btn-warning">Edit</a>
 <a href="{% url 'education_delete' object.pk %}" class="btn btn-danger">Delete</a>
 <a href="{% url 'education_list' %}" class="btn btn-secondary">Back</a>
+
+<!--Add Project" Button in Education detail -->
+<div class="row mt-4">
+  <div class="col-2">
+    <a href="{% url 'project_create' %}" class="btn btn-info btn-lg w-100 rounded-3 fw-semibold">Add Project</a>
+  </div>
+</div>
 {% endblock %}

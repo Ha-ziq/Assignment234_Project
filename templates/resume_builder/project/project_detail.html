@@ -19,4 +19,9 @@
   <a href="{% url 'project_update' project.pk %}" class="btn btn-warning">Edit</a>
   <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger">Delete</a>
 </div>
+<div class="text-end mb-4">
+  <a href="{% url 'work_experience_create' %}
+" class="btn btn-primary">➕ Add Experience</a>
+</div>
+
 {% endblock %}

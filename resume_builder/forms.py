@@ -15,18 +15,34 @@ class ResumeTemplateForm(forms.ModelForm):
 class ResumeForm(forms.ModelForm):
     class Meta:
         model = Resume
-        fields = ['title', 'summary', 'tags', 'template']  # Only user-editable fields
+        fields = ['title', 'summary', 'tags', 'template', 'visibility']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'summary': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'tags': forms.TextInput(attrs={'class': 'form-control'}),
+            'template': forms.Select(attrs={'class': 'form-select'}),
+            'visibility': forms.Select(attrs={'class': 'form-select'}),
+        }
 
-
-class ResumeSectionForm(forms.ModelForm):
+# making technologies optional cant get rid of "" is invalid form in add_experince
+class WorkExperienceForm(forms.ModelForm):
     class Meta:
-        model = ResumeSection
-        fields = ['section_type', 'title', 'content', 'order', 'is_visible']
+        model = WorkExperience
+        fields = ['job_title', 'company', 'location', 'start_date', 'end_date', 'is_current', 'description', 'achievements', 'technologies']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['technologies'].required = False  # ✅ avoids validation error
+
 
 class WorkExperienceForm(forms.ModelForm):
     class Meta:
         model = WorkExperience
         fields = ['job_title', 'company', 'location', 'start_date', 'end_date', 'is_current', 'description', 'achievements', 'technologies']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['technologies'].required = False  # ✅ avoids validation error
 
 class TechnicalSkillForm(forms.ModelForm):
     class Meta:
@@ -37,6 +53,16 @@ class EducationForm(forms.ModelForm):
     class Meta:
         model = Education
         fields = ['degree', 'institution', 'location', 'start_date', 'end_date', 'gpa', 'description', 'is_visible']
+        widgets = {
+            'degree': forms.TextInput(attrs={'class': 'form-control'}),
+            'institution': forms.TextInput(attrs={'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'gpa': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'is_visible': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
 
 class TechnologyForm(forms.ModelForm):
     class Meta:
@@ -46,7 +72,13 @@ class TechnologyForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'role', 'start_date', 'end_date', 'description', 'technologies', 'outcomes', 'url', 'is_active']
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
 
 class CertificationForm(forms.ModelForm):
     class Meta:

@@ -1,3 +1,5 @@
+
+
 {% extends 'resume_base.html' %}
 
 {% block title %}
@@ -5,8 +7,153 @@ Sample Page - NiceAdmin
 {% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1>Sample dashboard</h1>
-  <p>This is some sample content extending the base template.</p>
+{% load static %}
+<style>
+  .resume-img-animate {
+    position: relative;
+    z-index: 2;
+    animation: float 3s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border-radius: 16px;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0);}
+    50% { transform: translateY(-12px);}
+  }
+  .sparkle {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 3;
+    opacity: 0.8;
+    animation: sparkleMove 4s infinite linear;
+  }
+  .sparkle1 { top: 10%; left: 65%; animation-delay: 0s;}
+  .sparkle2 { top: 70%; left: 80%; animation-delay: 2s;}
+  .sparkle3 { top: 60%; left: 35%; animation-delay: 1s;}
+  @keyframes sparkleMove {
+    0% { transform: scale(1) rotate(0deg);}
+    50% { transform: scale(1.2) rotate(20deg);}
+    100% { transform: scale(1) rotate(0deg);}
+  }
+  .hero-bg {
+    background: linear-gradient(135deg, #e3f0ff 0%, #f8f9fa 100%);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    padding: 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .hero-desc {
+    font-size: 1.25rem;
+    color: #4a4a4a;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+</style>
+<div class="container my-5">
+  <div class="hero-bg">
+    <div class="row align-items-center">
+      <!-- Text Section (Left) -->
+      <div class="col-md-6 mb-4">
+        <span class="badge bg-success mb-2 px-3 py-2" style="font-size:1rem;">
+          <i class="bi bi-dot"></i> 21,057 resumes created today
+        </span>
+        <h1 class="hero-title">
+          Write your story with the ultimate resume builder
+        </h1>
+        <p class="hero-desc">
+          Only <span style="color:#007bff;font-weight:700;">2%</span> of resumes win. Yours will be one of them.<br>
+          Let’s build you a resume that works.
+        </p>
+        <div class="d-flex gap-3 mt-4">
+          <a href="{% url 'resume_create' %}" class="btn btn-primary hero-btn">
+            Create my resume
+          </a>
+          <a href="#" class="btn btn-outline-primary hero-btn">
+            Upload my resume
+          </a>
+        </div>
+        <div class="d-flex gap-5 mt-5">
+          <div>
+            <span class="fw-bold" style="font-size:1.5rem;color:#28a745;">39%</span>
+            <div class="text-muted" style="font-size:1rem;">more likely to get hired</div>
+          </div>
+          <div>
+            <span class="fw-bold" style="font-size:1.5rem;color:#ffc107;">8%</span>
+            <div class="text-muted" style="font-size:1rem;">better pay with your next job</div>
+          </div>
+        </div>
+      </div>
+      <!-- Image Section (Right) -->
+      <div class="col-md-6 mb-4 text-center position-relative" style="min-height: 420px;">
+        <img src="{% static 'img/resume_sample.jpeg' %}" alt="Resume Sample" class="img-fluid resume-img-animate" style="max-width: 400px;">
+        <img src="{% static 'img/sparkle_1.svg' %}" class="sparkle sparkle1" alt="">
+        <img src="{% static 'img/sparkle_2.svg' %}" class="sparkle sparkle2" alt="">
+        <img src="{% static 'img/sparkle_3.svg' %}" class="sparkle sparkle3" alt="">
+      </div>
+    </div>
+  </div>
 </div>
+<!-- card section-->
+<!-- ...existing code... -->
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <!-- Classic Preview Card -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow" style="border-left: 8px solid #007bff;">
+        <div class="card-body text-center">
+          <h5 class="card-title fw-bold" style="color: #007bff;">Classic Preview</h5>
+          <p class="card-text text-muted">Traditional layout, clean and professional.</p>
+          <a href="{% url 'classic_preview' %}" class="btn btn-primary">View Classic</a>
+        </div>
+      </div>
+    </div>
+    <!-- Modern Preview Card -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow" style="border-left: 8px solid #28a745;">
+        <div class="card-body text-center">
+          <h5 class="card-title fw-bold" style="color: #28a745;">Modern Preview</h5>
+          <p class="card-text text-muted">Sleek design with modern elements.</p>
+          <a href="{% url 'modern_preview' %}" class="btn btn-success">View Modern</a>
+        </div>
+      </div>
+    </div>
+    <!-- Creative Preview Card -->
+    <div class="col-md-4 mb-3">
+      <div class="card shadow" style="border-left: 8px solid #ffc107;">
+        <div class="card-body text-center">
+          <h5 class="card-title fw-bold" style="color: #ffc107;">Creative Preview</h5>
+          <p class="card-text text-muted">Stand out with a creative layout.</p>
+          <a href="{% url 'creative_preview' %}" class="btn btn-warning text-white">View Creative</a>
+        </div>
+      </div>
+    </div>
+    <!--  inside  card section in dashboard.html -->
+<div class="col-md-4 mb-3">
+  <div class="card shadow" style="border-left: 8px solid #17a2b8;">
+    <div class="card-body text-center">
+      <h5 class="card-title fw-bold" style="color: #17a2b8;">Technical Preview</h5>
+      <p class="card-text text-muted">Showcase your technical skills and experience.</p>
+      <a href="{% url 'technical_preview' %}" class="btn btn-info text-white">View Technical</a>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+
+<!-- ...existing code... -->
+
+
+
 {% endblock %}

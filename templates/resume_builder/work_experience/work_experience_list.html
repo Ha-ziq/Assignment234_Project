@@ -27,8 +27,10 @@
                         <td>{{ exp.end_date|default:"Present" }}</td>
                         <td>
                             <a href="{% url 'work_experience_detail' exp.pk %}" class="btn btn-sm btn-info">View</a>
-                            <a href="{% url 'work_experience_update' exp.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="{% url 'work_experience_delete' exp.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="{% url 'work_experience_update' exp.pk %}" class="btn btn-sm btn-warning">Edit</a>          
+                  <a href="{% url 'work_experience_delete' exp.pk %}" class="btn btn-sm btn-danger">Delete</a>
+<!-- Add Technical Skill button inline -->
+         
                         </td>
                     </tr>
                     {% empty %}
@@ -36,6 +38,9 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'technical_skill_create' %}" class="btn btn-success">Add Technical Skill</a>
+                <div>
         </div>
     </div>
 </div>

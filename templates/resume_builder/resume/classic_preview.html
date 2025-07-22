@@ -1,113 +1,124 @@
-{% comment %} {% extends "resume_base.html" %}
-{% block content %}
-<div class="container my-5">
-  <h1 class="text-center">{{ resume.title }}</h1>
-  <hr>
-  <h4>Summary</h4>
-  <p>{{ resume.summary }}</p>
-
-  <h4>Work Experience</h4>
-  {% for experience in resume.workexperience_set.all %}
-    <div>
-      <strong>{{ experience.position }}</strong> at {{ experience.company }} ({{ experience.start_date }} - {{ experience.end_date|default:"Present" }})
-      <p>{{ experience.description }}</p>
-    </div>
-  {% empty %}
-    <p>No experience added yet.</p>
-  {% endfor %}
-
-  <h4>Education</h4>
-  {% for education in resume.education_set.all %}
-    <div>
-      <strong>{{ education.degree }}</strong> - {{ education.institution }} ({{ education.start_date }} - {{ education.end_date|default:"Present" }})
-      <p>{{ education.description }}</p>
-    </div>
-  {% empty %}
-    <p>No education added yet.</p>
-  {% endfor %}
-</div>
-{% endblock %} {% endcomment %}
-
-
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>{{ resume.title }}</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 40px;
-      color: #222;
-    }
-
-    h1 {
-      text-align: center;
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
-    }
-
-    h2 {
-      margin-top: 30px;
-      color: #444;
-    }
-
-    .section {
-      margin-bottom: 25px;
-    }
-
-    .job-title {
-      font-weight: bold;
-    }
-
-    .date-range {
-      font-style: italic;
-      color: #666;
-      float: right;
-    }
-
-    p {
-      margin: 4px 0 10px 0;
-    }
-
-    .entry {
-      margin-bottom: 15px;
-    }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-white text-dark">
 
-  <h1>{{ resume.title }}</h1>
+  <div class="container py-5">
+    <!-- Resume Title -->
+    <div class="text-center mb-4 border-bottom pb-3">
+      <h1 class="fw-bold">{{ resume.title }}</h1>
+    </div>
 
-  <div class="section">
-    <h2>Summary</h2>
-    <p>{{ resume.summary }}</p>
-  </div>
+    <!-- Summary -->
+    {% if resume.summary %}
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Summary</h4>
+      <p>{{ resume.summary }}</p>
+    </section>
+    {% endif %}
 
-  <div class="section">
-    <h2>Work Experience</h2>
-    {% for experience in resume.workexperience_set.all %}
-      <div class="entry">
-        <div class="job-title">{{ experience.position }} at {{ experience.company }}</div>
-        <div class="date-range">{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</div>
-        <p>{{ experience.description }}</p>
-      </div>
-    {% empty %}
-      <p>No experience added yet.</p>
-    {% endfor %}
-  </div>
+    <!-- Work Experience -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Work Experience</h4>
+      {% for experience in resume.workexperience_set.all %}
+        <div class="mb-3">
+          <div class="d-flex justify-content-between fw-semibold">
+            <span>{{ experience.position }} at {{ experience.company }}</span>
+            <span>{{ experience.start_date }} – {{ experience.end_date|default:"Present" }}</span>
+          </div>
+          <p class="mb-1"><em>{{ experience.description }}</em></p>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No work experience added yet.</p>
+      {% endfor %}
+    </section>
 
-  <div class="section">
-    <h2>Education</h2>
-    {% for education in resume.education_set.all %}
-      <div class="entry">
-        <div class="job-title">{{ education.degree }} - {{ education.institution }}</div>
-        <div class="date-range">{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
-        <p>{{ education.description }}</p>
-      </div>
-    {% empty %}
-      <p>No education added yet.</p>
-    {% endfor %}
+    <!-- Education -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Education</h4>
+      {% for edu in resume.education_set.all %}
+        <div class="mb-3">
+          <div class="d-flex justify-content-between fw-semibold">
+            <span>{{ edu.degree }} - {{ edu.institution }}</span>
+            <span>{{ edu.start_date }} – {{ edu.end_date|default:"Present" }}</span>
+          </div>
+          <p class="mb-1"><em>{{ edu.description }}</em></p>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No education added yet.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Projects -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Projects</h4>
+      {% for project in resume.project_set.all %}
+        <div class="mb-3">
+          <div class="fw-semibold">{{ project.title }}</div>
+          <p class="mb-1">{{ project.description }}</p>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No projects added yet.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Technical Skills</h4>
+      {% if resume.technicalskill_set.all %}
+        <ul class="list-inline">
+          {% for skill in resume.technicalskill_set.all %}
+            <li class="list-inline-item badge bg-secondary me-1 mb-1">{{ skill.name }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted fst-italic">No technical skills added yet.</p>
+      {% endif %}
+    </section>
+
+    <!-- Certifications -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Certifications</h4>
+      {% for cert in resume.certification_set.all %}
+        <div class="mb-2">
+          <div class="fw-semibold">{{ cert.title }}</div>
+          <p class="mb-1">{{ cert.description }}</p>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No certifications added yet.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Awards -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Awards</h4>
+      {% for award in resume.award_set.all %}
+        <div class="mb-2">
+          <div class="fw-semibold">{{ award.title }}</div>
+          <p class="mb-1">{{ award.description }}</p>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No awards added yet.</p>
+      {% endfor %}
+    </section>
+
+    <!-- Languages -->
+    <section class="mb-4">
+      <h4 class="text-uppercase border-bottom pb-2">Languages</h4>
+      {% for lang in resume.language_set.all %}
+        <div class="mb-1">
+          <span class="fw-semibold">{{ lang.name }}</span> - <span class="fst-italic">{{ lang.get_proficiency_display }}</span>
+        </div>
+      {% empty %}
+        <p class="text-muted fst-italic">No languages added yet.</p>
+      {% endfor %}
+    </section>
+
   </div>
 
 </body>

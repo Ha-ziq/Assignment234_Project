@@ -12,11 +12,18 @@
           <a href="{% url 'technical_skill_detail' skill.pk %}" class="btn btn-sm btn-info">View</a>
           <a href="{% url 'technical_skill_update' skill.pk %}" class="btn btn-sm btn-warning">Edit</a>
           <a href="{% url 'technical_skill_delete' skill.pk %}" class="btn btn-sm btn-danger">Delete</a>
+          <!-- Add Certification Button -->
+   
         </div>
       </li>
     {% empty %}
       <li class="list-group-item">No technical skills added yet.</li>
     {% endfor %}
   </ul>
+ <div class="mt-4 d-flex justify-content-end">
+   <a href="{% url 'certification_create' %}" class="btn btn-info btn-sm text-white ms-2">
+      🎓 Add Certification
+   </a>
 </div>
+
 {% endblock %}
