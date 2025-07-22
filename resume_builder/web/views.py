@@ -123,6 +123,7 @@ class EducationCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('education_list')  # Redirect after successful save
 
     def form_valid(self, form):
+        print("EDUCATION FORM VALID TRIGGERED")  # Debug
         # Automatically assign the resume that belongs to the user
         user_resumes = Resume.objects.filter(user=self.request.user)
         if not user_resumes.exists():
@@ -262,20 +263,20 @@ class EducationDetailView(LoginRequiredMixin, DetailView):
 
 #new add education create view
 #this code will allow add education to submit thhe form which will keep data in database also it will redirect me to education_list.html
-class EducationCreateView(LoginRequiredMixin, CreateView):
-    model = Education
-    form_class = EducationForm
-    template_name = 'resume_builder/education/education_form.html'
-    success_url = reverse_lazy('education_list')  # Redirect after successful save
+# class EducationCreateView(LoginRequiredMixin, CreateView):
+#     model = Education
+#     form_class = EducationForm
+#     template_name = 'resume_builder/education/education_form.html'
+#     success_url = reverse_lazy('education_list')  # Redirect after successful save
 
-    def form_valid(self, form):
-        # Automatically assign the resume that belongs to the user
-        user_resumes = Resume.objects.filter(user=self.request.user)
-        if not user_resumes.exists():
-            form.add_error(None, "You must create a resume before adding education.")
-            return self.form_invalid(form)
-        form.instance.resume = user_resumes.first()  # Assign the resume to the education
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         # Automatically assign the resume that belongs to the user
+#         user_resumes = Resume.objects.filter(user=self.request.user)
+#         if not user_resumes.exists():
+#             form.add_error(None, "You must create a resume before adding education.")
+#             return self.form_invalid(form)
+#         form.instance.resume = user_resumes.first()  # Assign the resume to the education
+#         return super().form_valid(form)
     
 
 
