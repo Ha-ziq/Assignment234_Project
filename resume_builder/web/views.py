@@ -2,7 +2,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.utils.text import slugify
-import re
+from django.shortcuts import render
+# import re
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from resume_builder.models import WorkExperience,Resume,Education,TechnicalSkill,Project,Certification,Award,Language,ResumeTemplate
 from resume_builder.forms import WorkExperienceForm,EducationForm,ResumeForm,TechnicalSkillForm,ProjectForm,CertificationForm,AwardForm,LanguageForm
@@ -123,6 +124,7 @@ class EducationCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('education_list')  # Redirect after successful save
 
     def form_valid(self, form):
+        print("EDUCATION FORM VALID TRIGGERED")  # Debug
         # Automatically assign the resume that belongs to the user
         user_resumes = Resume.objects.filter(user=self.request.user)
         if not user_resumes.exists():
@@ -152,7 +154,17 @@ class ResumeDownloadView(View):
 
         # Render HTML
         template_path = f"resume_builder/resume/{file_name}"
-        html_string = render_to_string(template_path, {"resume": resume})
+        html_string = render_to_string(template_path, {
+        "resume": resume,
+        "education": resume.educations.all(),
+        "experience": resume.work_experiences.all(),
+        "certifications": resume.certifications.all(),
+        "awards": resume.awards.all(),
+        "technical_skills": resume.technical_skills.all(),
+        "projects": resume.projects.all(),
+        "languages": resume.languages.all(),
+})
+
 
         # Generate PDF and write to temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
@@ -262,20 +274,20 @@ class EducationDetailView(LoginRequiredMixin, DetailView):
 
 #new add education create view
 #this code will allow add education to submit thhe form which will keep data in database also it will redirect me to education_list.html
-class EducationCreateView(LoginRequiredMixin, CreateView):
-    model = Education
-    form_class = EducationForm
-    template_name = 'resume_builder/education/education_form.html'
-    success_url = reverse_lazy('education_list')  # Redirect after successful save
+# class EducationCreateView(LoginRequiredMixin, CreateView):
+#     model = Education
+#     form_class = EducationForm
+#     template_name = 'resume_builder/education/education_form.html'
+#     success_url = reverse_lazy('education_list')  # Redirect after successful save
 
-    def form_valid(self, form):
-        # Automatically assign the resume that belongs to the user
-        user_resumes = Resume.objects.filter(user=self.request.user)
-        if not user_resumes.exists():
-            form.add_error(None, "You must create a resume before adding education.")
-            return self.form_invalid(form)
-        form.instance.resume = user_resumes.first()  # Assign the resume to the education
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         # Automatically assign the resume that belongs to the user
+#         user_resumes = Resume.objects.filter(user=self.request.user)
+#         if not user_resumes.exists():
+#             form.add_error(None, "You must create a resume before adding education.")
+#             return self.form_invalid(form)
+#         form.instance.resume = user_resumes.first()  # Assign the resume to the education
+#         return super().form_valid(form)
     
 
 
@@ -545,3 +557,24 @@ class LanguageDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_queryset(self):
         return Language.objects.filter(resume__user=self.request.user)
+
+
+#view for showing the user template designs 
+from django.http import Http404
+from django.views import View
+
+class TemplatePreviewView(View):
+    def get(self, request):
+        template_map = {
+            "Classic": "resume_builder/resume/classic_preview.html",
+            "Modern": "resume_builder/resume/modern_preview.html",
+            "Creative": "resume_builder/resume/creative_preview.html",
+            "Technical": "resume_builder/resume/technical_preview.html",
+        }
+        selected_template = request.GET.get("template")
+        template_path = template_map.get(selected_template)
+
+        if not template_path:
+            raise Http404("Invalid template name")
+
+        return render(request, template_path)

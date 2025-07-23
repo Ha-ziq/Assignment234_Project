@@ -10,7 +10,7 @@ from .views import (
     CertificationCreateView,CertificationDetailView,CertificationUpdateView,CertificationDeleteView,
     AwardListView, AwardCreateView, AwardDetailView, AwardUpdateView, AwardDeleteView,
     LanguageListView, LanguageCreateView, LanguageDetailView, LanguageUpdateView, 
-    LanguageDeleteView, ResumeDeleteView, ResumeDownloadView
+    LanguageDeleteView, ResumeDeleteView, ResumeDownloadView,TemplatePreviewView
 
 )
 
@@ -75,5 +75,8 @@ urlpatterns = [
 
 #resume download url
     path('resume/<slug:slug>/download/', ResumeDownloadView.as_view(), name='resume_download'),
+
+#template design preview url
+path("resume/template/preview/", TemplatePreviewView.as_view(), name="template_preview"),
 ]
 
