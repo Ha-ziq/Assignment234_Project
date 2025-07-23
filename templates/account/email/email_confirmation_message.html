@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <body style="font-family: Arial, sans-serif; padding: 20px;">
+    <h2>Welcome to ResumeBuilder!</h2>
+    <p>Hi {{ user.username }},</p>
+    <p>Please click the button below to verify your email:</p>
+    <p>
+      <a href="{{ activate_url }}" style="
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;">
+        Confirm Email
+      </a>
+    </p>
+    <p>If the button doesn’t work, copy this link:</p>
+    <p><a href="{{ activate_url }}">{{ activate_url }}</a></p>
+    <p>— ResumeBuilder Team</p>
+  </body>
+</html>

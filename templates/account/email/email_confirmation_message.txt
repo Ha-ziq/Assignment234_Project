@@ -1,0 +1,14 @@
+Hi {{ user.username }}, 👋
+
+Thanks for joining **ResumeBuilder** — we're excited to have you on board! 🚀
+
+To activate your account and get started, simply click the link below:
+
+{{ activate_url }}
+
+If you didn’t sign up for ResumeBuilder, no worries — you can safely ignore this email.
+
+Let us know if you need any help along the way.
+
+Warm regards,  
+The ResumeBuilder Team
