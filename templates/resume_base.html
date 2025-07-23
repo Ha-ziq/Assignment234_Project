@@ -35,8 +35,8 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
       <a href="{% url 'dashboard' %}" class="logo d-flex align-items-center">
-        <img src="{% static 'img/logo1.png' %}" alt="">
-        <span class="d-none d-lg-block">DiamondTalent</span>
+        <img src="{% static 'img/copywriting.png' %}" alt="">
+        <span class="d-none d-lg-block">Create_Resume</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -106,15 +106,58 @@
   <main id="main" class="main">
     {% block content %}{% endblock %}
   </main>
+<footer class="footer mt-5 py-4 px-3  border-top">
+  <div class="container-fluid">
+    <div class="row text-muted">
+      
+      <!-- About Section -->
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold text-dark">About Us</h6>
+        <p class="small text-secondary fw-bold">DiamondTalent helps you build professional resumes effortlessly with AI support and job market insights.</p>
+      </div>
 
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>DiamondTalent</span></strong>. All Rights Reserved
+      <!-- Contact Info -->
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold text-dark fw-bold">Contact</h6>
+        <p class="small text-secondary mb-1 fw-bold">
+          Email:
+          <a href="mailto:saadtariq867@gmail.com" class="text-decoration-none text-dark-emphasis fw-bold">saadtariq867@gmail.com</a>
+        </p>
+        <p class="small text-secondary mb-1 fw-bold">Phone: +92 332 8676638</p>
+        <p class="small text-secondary fw-bold">Address: University of Management and Technology, Lahore</p>
+      </div>
+
+      <!-- Explore Section -->
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold text-dark fw-bold">Explore</h6>
+        <ul class="list-unstyled small text-secondary fw-bold">
+          <li>Resume Builder</li>
+          <li>Templates</li>
+          <li>AI Assistance</li>
+          <li>Job Tracker</li>
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="col-md-3 mb-4">
+        <h6 class="fw-bold text-dark fw-bold">Follow Us</h6>
+        <div class="d-flex gap-3">
+          <a href="https://facebook.com" target="_blank" class="text-dark-emphasis"><i class="bi bi-facebook fs-5"></i></a>
+          <a href="https://twitter.com" target="_blank" class="text-dark-emphasis"><i class="bi bi-twitter fs-5"></i></a>
+          <a href="https://instagram.com" target="_blank" class="text-dark-emphasis"><i class="bi bi-instagram fs-5"></i></a>
+          <a href="https://linkedin.com" target="_blank" class="text-dark-emphasis"><i class="bi bi-linkedin fs-5"></i></a>
+        </div>
+      </div>
+
     </div>
-    <div class="credits">
-      Designed by <a href="https://flet.dev/">You</a>
+
+    <hr>
+    <div class="d-flex justify-content-between small text-secondary fw-bold">
+      <span>&copy; 2024 Create_Resume. All rights reserved.</span>
+      <span>Designed by <strong class="text-dark fw-bold">Saad Tariq</strong></span>
     </div>
-  </footer>
+  </div>
+</footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
