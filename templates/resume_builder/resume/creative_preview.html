@@ -1,154 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Resume - {{ resume.title }}</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            display: flex;
-            flex-direction: row;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 30%;
-            background-color: #f7e5d4;
-            padding: 30px 20px;
-            box-sizing: border-box;
-        }
-        .main {
-            width: 70%;
-            padding: 40px;
-            background: #fff;
-            box-sizing: border-box;
-        }
-        h1 {
-            font-size: 28px;
-            margin: 0;
-            text-transform: uppercase;
-            color: #333;
-        }
-        h2 {
-            font-size: 16px;
-            margin-top: 30px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        .job-title, .degree {
-            font-weight: bold;
-            font-size: 15px;
-        }
-        .meta {
-            font-size: 12px;
-            color: #777;
-        }
-        .skill-bar {
-            width: 100%;
-            height: 8px;
-            background: #ddd;
-            border-radius: 4px;
-            margin: 5px 0 10px;
-            overflow: hidden;
-        }
-        .skill-fill {
-            height: 100%;
-            background: #b89f8e;
-        }
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        ul li {
-            margin-bottom: 5px;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="sidebar">
-        <h2>Contact</h2>
-        <ul>
-            <li>{{ resume.user.email }}</li>
-            <li>{{ resume.user.username }}</li>
-        </ul>
+{% extends "resume_base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row min-vh-100">
+    <!-- Sidebar -->
+    <div class="col-md-4 bg-warning-subtle p-4">
+      
 
-        <h2>Education</h2>
-        {% for education in education %}
-            <div class="section">
-                <div class="degree">{{ education.degree }}</div>
-                <div class="meta">{{ education.institution }}<br>{{ education.start_date }} - {{ education.end_date|default:"Present" }}</div>
-            </div>
-        {% endfor %}
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Education</h4>
+      {% for education in education %}
+      <div class="mb-3">
+        <div class="fw-semibold">{{ education.degree }}</div>
+        <small class="text-muted d-block">{{ education.institution }}</small>
+        <small class="text-muted">{{ education.start_date }} - {{ education.end_date|default:"Present" }}</small>
+      </div>
+      {% endfor %}
 
-        <h2>Expertise</h2>
-        <ul>
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Expertise</h4>
+      <ul class="list-unstyled">
         {% for skill in technical_skills %}
-            <li>{{ skill.technology.name }} – {{ skill.get_proficiency_display }} ({{ skill.years_experience }} yrs)</li>
+        <li>{{ skill.technology.name }} – {{ skill.get_proficiency_display }} ({{ skill.years_experience }} yrs)</li>
         {% endfor %}
-        </ul>
+      </ul>
 
-        <h2>Languages</h2>
-        <ul>
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Languages</h4>
+      <ul class="list-unstyled">
         {% for lang in languages %}
-            <li>{{ lang.name }} – {{ lang.get_proficiency_display }}</li>
+        <li>{{ lang.name }} – {{ lang.get_proficiency_display }}</li>
         {% endfor %}
-        </ul>
+      </ul>
 
-        <h2>Interests</h2>
-        <ul>
-            <li>Reading</li>
-            <li>Design</li>
-            <li>Music</li>
-        </ul>
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Interests</h4>
+      <ul class="list-unstyled">
+        <li>Reading</li>
+        <li>Design</li>
+        <li>Music</li>
+      </ul>
     </div>
 
-    <div class="main">
-        <h1>{{ resume.title }}</h1>
-        <p>{{ resume.summary }}</p>
+    <!-- Main Section -->
+    <div class="col-md-8 p-5 bg-white">
+      <h1 class="fw-bold text-uppercase">{{ resume.title }}</h1>
+      <p class="text-muted">{{ resume.summary }}</p>
 
-        <h2>Experience</h2>
-        {% for experience in experience %}
-            <div class="section">
-                <div class="job-title">{{ experience.position }} - {{ experience.company }}</div>
-                <div class="meta">{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</div>
-                <p>{{ experience.description }}</p>
-            </div>
-        {% endfor %}
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Experience</h4>
+      {% for experience in experience %}
+      <div class="mb-4">
+        <div class="fw-semibold">{{ experience.position }} - {{ experience.company }}</div>
+        <small class="text-muted">{{ experience.start_date }} - {{ experience.end_date|default:"Present" }}</small>
+        <p class="mt-1">{{ experience.description }}</p>
+      </div>
+      {% endfor %}
 
-        <h2>Projects</h2>
-        {% for project in projects %}
-            <div class="section">
-                <div class="job-title">{{ project.title }} – {{ project.role }}</div>
-                <div class="meta">{{ project.start_date }} - {{ project.end_date|default:"Present" }}</div>
-                <p>{{ project.description }}</p>
-            </div>
-        {% endfor %}
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Projects</h4>
+      {% for project in projects %}
+      <div class="mb-4">
+        <div class="fw-semibold">{{ project.title }} – {{ project.role }}</div>
+        <small class="text-muted">{{ project.start_date }} - {{ project.end_date|default:"Present" }}</small>
+        <p class="mt-1">{{ project.description }}</p>
+      </div>
+      {% endfor %}
 
-        <h2>Certifications</h2>
-        {% for cert in certifications %}
-            <div class="section">
-                <div class="job-title">{{ cert.name }}</div>
-                <div class="meta">{{ cert.issuing_organization }} | {{ cert.issue_date }}</div>
-            </div>
-        {% endfor %}
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Certifications</h4>
+      {% for cert in certifications %}
+      <div class="mb-3">
+        <div class="fw-semibold">{{ cert.name }}</div>
+        <small class="text-muted">{{ cert.issuing_organization }} | {{ cert.issue_date }}</small>
+      </div>
+      {% endfor %}
 
-        <h2>Awards</h2>
-        {% for award in awards %}
-            <div class="section">
-                <div class="job-title">{{ award.title }}</div>
-                <div class="meta">{{ award.issuer }} | {{ award.date_awarded }}</div>
-                <p>{{ award.description }}</p>
-            </div>
-        {% endfor %}
+      <h4 class="fw-bold border-bottom pb-2 mt-4">Awards</h4>
+      {% for award in awards %}
+      <div class="mb-3">
+        <div class="fw-semibold">{{ award.title }}</div>
+        <small class="text-muted">{{ award.issuer }} | {{ award.date_awarded }}</small>
+        <p class="mt-1">{{ award.description }}</p>
+      </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
-</body>
-</html>
+{% endblock %}

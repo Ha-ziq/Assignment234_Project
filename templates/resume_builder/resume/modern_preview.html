@@ -1,35 +1,101 @@
 {% extends "resume_base.html" %}
 {% block content %}
-<div class="container my-5">
-  <div class="bg-light p-4 rounded shadow-sm">
-    <h1 class="text-primary">{{ resume.title }}</h1>
-    <p class="text-muted">{{ resume.summary }}</p>
+<div class="container my-5 p-4 shadow rounded" style="background-color: #ffffff; max-width: 960px;">
+  <!-- Resume Header -->
+  <div class="text-center mb-4">
+    <h1 class="fw-bold text-uppercase">{{ resume.title }}</h1>
+    <hr class="border-danger border-2 opacity-100" style="width: 60px; margin: 0 auto;">
   </div>
 
-  <div class="mt-4">
-    <h3 class="border-bottom pb-2">Experience</h3>
-    {% for exp in resume.workexperience_set.all %}
-      <div class="mb-3">
-        <h5>{{ exp.position }} <small class="text-muted">at {{ exp.company }}</small></h5>
-        <p class="mb-1"><small>{{ exp.start_date }} - {{ exp.end_date|default:"Present" }}</small></p>
-        <p>{{ exp.description }}</p>
-      </div>
-    {% empty %}
-      <p>No experience listed.</p>
-    {% endfor %}
+  <!-- Summary Section -->
+  <div class="mb-4">
+    <h5 class="fw-bold text-danger">Summary</h5>
+    <p>{{ resume.summary }}</p>
   </div>
 
-  <div class="mt-4">
-    <h3 class="border-bottom pb-2">Education</h3>
-    {% for edu in resume.education_set.all %}
-      <div class="mb-3">
-        <h5>{{ edu.degree }} <small class="text-muted">from {{ edu.institution }}</small></h5>
-        <p class="mb-1"><small>{{ edu.start_date }} - {{ edu.end_date|default:"Present" }}</small></p>
-        <p>{{ edu.description }}</p>
+  <!-- Two-column layout -->
+  <div class="row g-4">
+    <!-- Left Column -->
+    <div class="col-md-6">
+      <!-- Education -->
+      <div class="mb-4">
+        <h6 class="bg-success text-white px-3 py-2 rounded fw-bold">Education</h6>
+        {% for edu in resume.education_set.all %}
+          <div class="mb-2">
+            <strong>{{ edu.degree }}</strong><br>
+            <small class="text-muted">{{ edu.institution }}</small><br>
+            <small>{{ edu.start_date }} - {{ edu.end_date|default:"Present" }}</small>
+            <p>{{ edu.description }}</p>
+          </div>
+        {% endfor %}
       </div>
+
+      <!-- Experience -->
+      <div class="mb-4">
+        <h6 class="bg-primary text-white px-3 py-2 rounded fw-bold">Experience</h6>
+        {% for exp in resume.workexperience_set.all %}
+          <div class="mb-2">
+            <strong>{{ exp.position }}</strong><br>
+            <small class="text-muted">{{ exp.company }}</small><br>
+            <small>{{ exp.start_date }} - {{ exp.end_date|default:"Present" }}</small>
+            <p>{{ exp.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Certifications -->
+      <div class="mb-4">
+        <h6 class="bg-danger text-white px-3 py-2 rounded fw-bold">Certifications</h6>
+        {% for cert in resume.certification_set.all %}
+          <p>{{ cert.name }} - {{ cert.issuer }}</p>
+        {% endfor %}
+      </div>
+
+      <!-- Languages -->
+      <div class="mb-4">
+        <h6 class="bg-info text-white px-3 py-2 rounded fw-bold">Languages</h6>
+        {% for lang in resume.language_set.all %}
+          <p>{{ lang.name }} - {{ lang.proficiency }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-md-6">
+      <!-- Projects -->
+      <div class="mb-4">
+        <h6 class="bg-warning text-white px-3 py-2 rounded fw-bold">Projects</h6>
+        {% for project in resume.project_set.all %}
+          <div class="mb-2">
+            <strong>{{ project.name }}</strong><br>
+            <small>{{ project.start_date }} - {{ project.end_date|default:"Present" }}</small>
+            <p>{{ project.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Technical Skills -->
+      <!-- Technical Skills -->
+<div class="mb-4">
+  <h6 class="bg-warning text-white px-3 py-2 rounded fw-bold">Technical Skills</h6>
+  <ul class="list-group list-group-flush">
+    {% for skill in resume.skill_set.all %}
+      <li class="list-group-item px-0 border-0">{{ skill.name }}</li>
     {% empty %}
-      <p>No education listed.</p>
+      <li class="list-group-item px-0 border-0 text-muted">No skills added.</li>
     {% endfor %}
+  </ul>
+</div>
+
+
+      <!-- Awards -->
+      <div class="mb-4">
+        <h6 class="bg-primary text-white px-3 py-2 rounded fw-bold">Awards</h6>
+        {% for award in resume.award_set.all %}
+          <p>{{ award.title }} - {{ award.description }}</p>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
