@@ -36,9 +36,7 @@ urlpatterns = [
     path('work-experience/<int:pk>/', WorkExperienceDetailView.as_view(), name='work_experience_detail'),
 #urls for education
     path('education/', EducationListView.as_view(), name='education_list'),
- path('education/add/', EducationCreateView.as_view(), name='education_create'),
-
-
+    path('education/add/', EducationCreateView.as_view(), name='education_create'),
     path('education/<int:pk>/', EducationDetailView.as_view(), name='education_detail'),
     path('education/<int:pk>/edit/', EducationUpdateView.as_view(), name='education_update'),
     path('education/<int:pk>/delete/', EducationDeleteView.as_view(), name='education_delete'),

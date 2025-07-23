@@ -113,7 +113,8 @@ class ResumeCreateView(CreateView):
     # ✅ This MUST be inside the class!
     def get_success_url(self):
         if self.object.pk:
-            return reverse_lazy('resume_preview', kwargs={'pk': self.object.pk})
+            # return reverse_lazy('resume_preview', kwargs={'pk': self.object.pk})
+            return reverse_lazy('education_create') + f'?resume_id={self.object.pk}'
         return reverse_lazy('resume_list')  # fallback
 
 #this code will allow add education to submit thhe form which will keep data in database also it will redirect me to education_list.html

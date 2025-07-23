@@ -5,10 +5,10 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{% block title %}Dashboard - DiamondTalent{% endblock %}</title>
+  <title>{% block title %}Dashboard - Create_Resume{% endblock %}</title>
 
   <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/copywriting.png' %}" rel="icon">
   <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -29,8 +29,8 @@
   {% block extra_head %}{% endblock %}
 </head>
 
-<body>
-
+<body class="toggle-sidebar">
+  
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
@@ -74,7 +74,7 @@
   </header>
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  <aside id="sidebar" class="sidebar collapsed">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'dashboard' %}">
@@ -82,20 +82,20 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'dashboard' %}">
+        <a class="nav-link collapsed" href="{% url 'resume_list' %}">
           <i class="bi bi-file-earmark-text"></i><span>Resumes</span>
         </a>
       </li>
-      <li class="nav-item">
+      {% comment %} <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard' %}">
           <i class="bi bi-paperclip"></i><span>Applications</span>
         </a>
-      </li>
-      <li class="nav-item">
+      </li> {% endcomment %}
+      {% comment %} <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard' %}">
           <i class="bi bi-briefcase"></i><span>Job Listings</span>
         </a>
-      </li>
+      </li> {% endcomment %}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'dashboard' %}">
         </a>
