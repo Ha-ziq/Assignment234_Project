@@ -69,7 +69,7 @@ Sample Page - NiceAdmin
             transition: transform 0.3s ease-in-out;
         }
 </style>
-<div class="container my-5">
+<div class="container my-5 m-10">
   <div class="hero-bg">
     <div class="row align-items-center">
       <!-- Text Section (Left) -->
@@ -116,7 +116,7 @@ Sample Page - NiceAdmin
 
 
 <!--code for message and company logos-->
- <section class="container py-5">
+ <section class="container py-5 m-5">
         <div class="row justify-content-center text-center">
             <!-- Title -->
             <div class="col-12 mb-4">
@@ -145,7 +145,7 @@ Sample Page - NiceAdmin
 
 <!-- card section-->
 <!-- ...existing code... -->
-<div class="container my-5">
+<div class="container m-10">
   <div class="row justify-content-center">
     <!-- Classic Preview Card -->
    <!-- Classic Preview Card -->
@@ -199,7 +199,7 @@ Sample Page - NiceAdmin
                 Stand out with a creative layout.
             </p>
             <!-- Button -->
-            <a href="{% url 'resume_list' %}" class="btn btn-dark text-white py-2 px-4 rounded-pill" style="font-weight: bold; transition: 0.3s;">
+            <a href="{% url 'resume_list' %}" class="btn btn-light text-dark py-2 px-4 rounded-pill" style="font-weight: bold; transition: 0.3s;">
                 View Resumes
             </a>
         </div>
@@ -222,6 +222,90 @@ Sample Page - NiceAdmin
             <a href="{% url 'resume_list' %}" class="btn btn-light text-dark py-2 px-4 rounded-pill fw-semibold transition-all duration-300 ease-in-out hover:bg-dark hover:text-white">
                 View Resumes
             </a>
+        </div>
+    </div>
+</div>
+
+<!--get hired section-->
+<div class="container-fluid my-15 px-5 mx-15">
+    <h2 class="text-center fw-bold mb-4">Get hired fast with a powerful resume</h2>
+    <div class="row g-0 justify-content-center px-2">
+        <!-- Feature 1 -->
+        <div class="col-12 col-md-4 mb-3 px-1">
+            <div class="card1 py-4 border-0 rounded-0">
+                <div class="card-body1 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/resume_icon.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">A better resume in minutes</h5>
+                    <p class="card-text text-muted">Replace your old resume in a few simple clicks. Our builder gives recruiters what they want.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-12 col-md-4 mb-3 px-5">
+            <div class="card2 py-4 border-0 rounded-0">
+                <div class="card-body2 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/ai.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">Easy with AI</h5>
+                    <p class="card-text text-muted">Quickly generate formal phrases and summaries. Sound professional, faster.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-12 col-md-4 mb-3 px-5">
+            <div class="card3 py-4 border-0 rounded-0">
+                <div class="card-body3 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/template.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">ATS-friendly templates</h5>
+                    <p class="card-text text-muted">Tick every box and make sure your resume is never filtered out by the hiring software.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-12 col-md-4 mb-3 px-5">
+            <div class="card4 py-4 border-0 rounded-0">
+                <div class="card-body4 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/creative.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">Pre-written content</h5>
+                    <p class="card-text text-muted">Stop worrying about words. Save time by adding pre-approved, tested content from certified writers.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="col-12 col-md-4 mb-3 px-5">
+            <div class="card5 py-4 border-0 rounded-0">
+                <div class="card-body5 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/competition.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">Beat the competition</h5>
+                    <p class="card-text text-muted">Our tested resume templates are designed to make you more attractive to recruiters.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="col-12 col-md-4 mb-3 px-5 ">
+            <div class="card6 py-4 border-0 rounded-0">
+                <div class="card-body6 text-center px-3">
+                    <div class="mb-3">
+                        <img src="{% static 'img/pay.png' %}" alt="Icon" class="img-fluid mb-3" style="max-width: 50px;">
+                    </div>
+                    <h5 class="card-title fw-bold text-primary">Get paid more</h5>
+                    <p class="card-text text-muted">A higher salary begins with a strong resume. Our salary analyzer tells you if your job offer is competitive (or not).</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
