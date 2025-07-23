@@ -1,8 +1,39 @@
 {% extends "guest_base.html" %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h2>Confirm Your Email</h2>
-    <p>Please check your inbox for the verification link. Once confirmed, you can log innnn.</p>
+<style>
+  body {
+    background: linear-gradient(135deg, #e0f7fa, #e3f2fd);
+    min-height: 100vh;
+  }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
+  <div class="p-5 rounded shadow-lg text-center" style="max-width: 600px; background-color: #ffffff; border: 1px solid #d6e9f9;">
+    
+    <div class="mb-4">
+      <svg width="64" height="64" fill="#0d6efd" viewBox="0 0 16 16">
+        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1l-8 4.5L0 5V4z"/>
+        <path d="M0 6.697v5.104l5.803-3.27L0 6.697zM6.761 8.83l-6.761 3.81A2 2 0 0 0 2 14h12a2 2 0 0 0 1.999-1.36l-6.76-3.81L8 9.586l-1.239-.757z"/>
+        <path d="M16 6.697l-5.803 3.137L16 11.801V6.697z"/>
+      </svg>
+    </div>
+
+    <h2 style="color: #0d6efd; font-weight: 700;" class="mb-3">Confirm Your Email</h2>
+
+    <p class="lead" style="color: #333;">
+      We've sent a confirmation link to your email. Click it to activate your account and start using ResumeBuilder!
+    </p>
+
+    <p style="color: #666; font-size: 0.95rem;">
+      Didn’t get the email? Check your spam folder or try again after a few minutes.
+    </p>
+
+    <hr style="border-color: #ccc; margin: 2rem 0;">
+
+    <p class="text-muted" style="font-size: 0.9rem;">
+      Once confirmed, you’ll be able to log in and build beautiful resumes effortlessly.
+    </p>
   </div>
+</div>
 {% endblock %}

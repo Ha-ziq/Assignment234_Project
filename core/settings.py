@@ -227,8 +227,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
 
-
-
+ACCOUNT_ADAPTER = 'core.adapters.CustomAccountAdapter'
 
 LOGIN_URL = '/web/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
@@ -238,9 +237,10 @@ ACCOUNT_FORMS = {
 }
 
 # Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'f0cb0b9d536e42'
-EMAIL_HOST_PASSWORD = '588663c1d79800'
-EMAIL_PORT = '2525'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'ResumeBuilder Dev <no-reply@dev.local>'
+EMAIL_HOST_USER = '2bf773738bc7b1'
+EMAIL_HOST_PASSWORD = '6c634551c00941'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'no-reply@resumebuilder.com'
