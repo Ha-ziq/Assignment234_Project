@@ -1,4 +1,173 @@
-{% extends "resume_base.html" %}
+{% extends "resume_pdf_base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  body {
+    font-family: "Helvetica", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 40px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+  .muted {
+    color: #888;
+    font-style: italic;
+  }
+  .section {
+    margin-top: 25px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .date-range {
+    float: right;
+    font-size: 13px;
+    color: #555;
+  }
+</style>
+
+<!-- Full Name -->
+<h1>
+  {% if resume.full_name %}{{ resume.full_name }}
+  {% elif resume.user.first_name or resume.user.last_name %}
+    {{ resume.user.first_name }} {{ resume.user.last_name }}
+  {% else %}{{ resume.user.username }}{% endif %}
+</h1>
+
+<!-- Contact Info -->
+{% comment %} <p style="text-align: center; font-size: 13px; color: #666;">
+  {% if resume.email %}📧 {{ resume.email }}{% else %}<span class="muted">Email not provided</span>{% endif %}
+  {% if resume.phone_number %} | 📞 {{ resume.phone_number }}{% else %} | <span class="muted">Phone not provided</span>{% endif %}
+  {% if resume.location %} | 📍 {{ resume.location }}{% endif %}
+</p> {% endcomment %}
+
+<hr>
+
+<!-- Education -->
+<div class="section">
+  <div class="section-title">Education</div>
+  {% if resume.educations.exists %}
+    {% for edu in resume.educations.all %}
+      <p class="bold">{{ edu.degree }}{% if edu.field_of_study %} in {{ edu.field_of_study }}{% endif %}</p>
+      <p>{{ edu.institution }} 
+        {% if edu.start_date or edu.end_date %}
+          <span class="date-range">
+            {% if edu.start_date %}{{ edu.start_date|date:"Y" }}{% else %}N/A{% endif %} -
+            {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}
+          </span>
+        {% endif %}
+      </p>
+      {% if edu.description %}<p>{{ edu.description }}</p>{% endif %}
+    {% endfor %}
+  {% else %}
+    <p class="muted">No education details added.</p>
+  {% endif %}
+</div>
+
+<!-- Experience -->
+<div class="section">
+  <div class="section-title">Experience</div>
+  {% if resume.work_experiences.exists %}
+    {% for exp in resume.work_experiences.all %}
+      <p class="bold">{{ exp.job_title }}</p>
+      <p>{{ exp.company_name }} <span class="date-range">
+        {% if exp.start_date %}{{ exp.start_date|date:"F Y" }}{% endif %} –
+        {% if exp.end_date %}{{ exp.end_date|date:"F Y" }}{% else %}Present{% endif %}
+      </span></p>
+      {% if exp.description %}<p>{{ exp.description }}</p>{% endif %}
+    {% endfor %}
+  {% else %}
+    <p class="muted">No experience details added.</p>
+  {% endif %}
+</div>
+
+<!-- Projects -->
+<div class="section">
+  <div class="section-title">Projects</div>
+  {% if resume.projects.exists %}
+    {% for proj in resume.projects.all %}
+      <p class="bold">{{ proj.title }}</p>
+      {% if proj.url %}<p>🔗 {{ proj.url }}</p>{% endif %}
+      {% if proj.description %}<p>{{ proj.description }}</p>{% endif %}
+    {% endfor %}
+  {% else %}
+    <p class="muted">No projects added.</p>
+  {% endif %}
+</div>
+
+<!-- Technical Skills -->
+<div class="section">
+  <div class="section-title">Technical Skills</div>
+  {% if resume.technical_skills.exists %}
+    <ul>
+      {% for skill in resume.technical_skills.all %}
+        <li>{{ skill.technology.name }} — {{ skill.get_proficiency_display }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No technical skills added.</p>
+  {% endif %}
+</div>
+
+<!-- Certifications -->
+<div class="section">
+  <div class="section-title">Certifications</div>
+  {% if resume.certifications.exists %}
+    {% for cert in resume.certifications.all %}
+      <p class="bold">{{ cert.name }}</p>
+      <p>{{ cert.organization }} | {{ cert.issue_date|date:"F Y" }}</p>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No certifications added.</p>
+  {% endif %}
+</div>
+
+<!-- Awards -->
+<div class="section">
+  <div class="section-title">Awards</div>
+  {% if resume.awards.exists %}
+    {% for award in resume.awards.all %}
+      <p class="bold">{{ award.title }}</p>
+      <p>{{ award.date|date:"F Y" }} — {{ award.description }}</p>
+    {% endfor %}
+  {% else %}
+    <p class="muted">No awards added.</p>
+  {% endif %}
+</div>
+
+<!-- Languages -->
+<div class="section">
+  <div class="section-title">Languages</div>
+  {% if resume.languages.exists %}
+    <ul>
+      {% for lang in resume.languages.all %}
+        <li>{{ lang.name }} ({{ lang.proficiency }})</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No languages added.</p>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+
+
+
+
+{% comment %} {% extends "resume_base.html" %}
 {% block content %}
 <div class="container my-5">
 
@@ -93,4 +262,6 @@
   </div>
 
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
+
+

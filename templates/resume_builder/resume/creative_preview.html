@@ -1,4 +1,180 @@
-{% extends "resume_base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Creative Resume</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 30%;
+            background-color: #fef1c4;
+            padding: 40px 30px;
+        }
+        .main-content {
+            width: 70%;
+            padding: 40px 50px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+        h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            font-size: 22px;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .muted {
+            color: #888;
+            font-style: italic;
+        }
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <div class="section">
+            <h2>Education</h2>
+            {% if resume.educations.exists %}
+                {% for edu in resume.educations.all %}
+                    <p><strong>{{ edu.degree }}</strong></p>
+                    <p>{{ edu.institution }}</p>
+                    <p>{{ edu.start_date }} - {{ edu.end_date }}</p>
+                    {% if edu.description %}
+                    <p>{{ edu.description }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="muted">No education added.</p>
+            {% endif %}
+        </div>
+
+    <div class="section">
+    <h2>Expertise</h2>
+    {% if resume.technical_skills.exists %}
+        {% for skill in resume.technical_skills.all %}
+            <div style="margin-bottom: 10px;">
+                <strong>{{ skill.technology.name }}</strong>
+                <div style="background-color: #ddd; height: 10px; border-radius: 5px; overflow: hidden;">
+                    <div style="
+                        width: {{ skill.proficiency }}%;
+                        background-color: #333;
+                        height: 100%;
+                        transition: width 0.3s;
+                    "></div>
+                </div>
+                <small style="color: #666;">{{ skill.get_proficiency_display }}</small>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="muted">No skills listed.</p>
+    {% endif %}
+</div>
+
+
+        <div class="section">
+            <h2>Languages</h2>
+            {% if resume.languages.exists %}
+                <ul>
+                {% for lang in resume.languages.all %}
+                    <li>{{ lang.name }} ({{ lang.proficiency }})</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p class="muted">No languages listed.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Interests</h2>
+            {% if resume.interests %}
+                <ul>
+                    {% for interest in resume.interests.splitlines %}
+                        <li>{{ interest }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="muted">No interests provided.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>CREATIVE</h1>
+        <p class="muted">creative resume</p>
+
+        <div class="section">
+            <h2>Experience</h2>
+            {% if resume.work_experiences.exists %}
+                {% for exp in resume.work_experiences.all %}
+                    <p><strong>{{ exp.job_title }}</strong> at {{ exp.company_name }}</p>
+                    <p>{{ exp.start_date }} - {{ exp.end_date }}</p>
+                    <p>{{ exp.description }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="muted">No experience added.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Projects</h2>
+            {% if resume.projects.exists %}
+                {% for proj in resume.projects.all %}
+                    <p><strong>{{ proj.title }}</strong></p>
+                    {% if proj.url %}<p>{{ proj.url }}</p>{% endif %}
+                    <p>{{ proj.description }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="muted">No projects added.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Certifications</h2>
+            {% if resume.certifications.exists %}
+                {% for cert in resume.certifications.all %}
+                    <p><strong>{{ cert.name }}</strong> — {{ cert.organization }}</p>
+                    <p>{{ cert.issue_date }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="muted">No certifications added.</p>
+            {% endif %}
+        </div>
+
+        <div class="section">
+            <h2>Awards</h2>
+            {% if resume.awards.exists %}
+                {% for award in resume.awards.all %}
+                    <p><strong>{{ award.title }}</strong></p>
+                    <p>{{ award.date }} — {{ award.description }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="muted">No awards added.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+{% comment %} {% extends "resume_base.html" %}
 {% block content %}
 <div class="container-fluid">
   <div class="row min-vh-100">
@@ -79,4 +255,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}

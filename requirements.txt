@@ -10,3 +10,4 @@ drf-spectacular
 drf-spectacular[sidecar]
 pillow
 django-allauth
+weasyprint>=60.1

@@ -1,4 +1,170 @@
-{% extends "resume_base.html" %}
+{% extends "resume_pdf_base.html" %}
+{% load static %}
+
+{% block content %}
+<div style="font-family: Arial, sans-serif; padding: 40px; max-width: 1000px; margin: auto; background: #fff;">
+
+  <!-- Header -->
+  <h1 style="text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 10px;">
+    {% if resume.full_name %}{{ resume.full_name }}
+    {% elif resume.user.first_name or resume.user.last_name %}
+      {{ resume.user.first_name }} {{ resume.user.last_name }}
+    {% else %}{{ resume.user.username }}{% endif %}
+  </h1>
+  <hr style="border: none; height: 4px; width: 60px; background-color: crimson; margin: 10px auto 30px auto;">
+
+  <!-- Summary -->
+  {% if resume.title %}
+    <h3 style="color: crimson;">Summary</h3>
+    <p style="margin-bottom: 30px;">{{ resume.title }}</p>
+  {% endif %}
+
+  <!-- Grid layout -->
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+
+    <!-- Left Column -->
+    <div style="flex: 1; min-width: 45%;">
+
+      <!-- Education -->
+<div style="background: seagreen; color: white; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Education</div>
+<div style="padding: 10px;">
+  {% if resume.educations.exists %}
+    {% for edu in resume.educations.all %}
+      <p><strong>{{ edu.institution|default:"Institute Not Provided" }}</strong></p>
+      <p>
+        {{ edu.degree|default:"Degree Not Provided" }}
+        {% if edu.field_of_study %} in {{ edu.field_of_study }}{% endif %}
+      </p>
+      <p>{{ edu.start_date|date:"F Y" }} – {{ edu.end_date|date:"F Y" }}</p>
+      {% if edu.description %}
+        <p>{{ edu.description }}</p>
+      {% endif %}
+      <br>
+    {% endfor %}
+  {% else %}
+    <p>No education added.</p>
+  {% endif %}
+</div>
+
+      <!-- Experience -->
+      <div style="background: royalblue; color: white; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Experience</div>
+      <div style="padding: 10px;">
+        {% if resume.work_experiences.exists %}
+          {% for exp in resume.work_experiences.all %}
+            <p><strong>{{ exp.job_title }}</strong> at {{ exp.company_name }}</p>
+            <p>{{ exp.start_date }} - {{ exp.end_date }}</p>
+            <p>{{ exp.description }}</p>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p>No experience added.</p>
+        {% endif %}
+      </div>
+
+      <!-- Certifications -->
+      <div style="background: crimson; color: white; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Certifications</div>
+      <div style="padding: 10px;">
+        {% if resume.certifications.exists %}
+          {% for cert in resume.certifications.all %}
+            <p><strong>{{ cert.name }}</strong> - {{ cert.organization }}</p>
+            <p>{{ cert.issue_date }}</p>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p>No certifications added.</p>
+        {% endif %}
+      </div>
+
+      <!-- Languages -->
+      <div style="background: deepskyblue; color: white; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Languages</div>
+      <div style="padding: 10px;">
+        {% if resume.languages.exists %}
+          <ul>
+            {% for lang in resume.languages.all %}
+              <li>{{ lang.name }} ({{ lang.proficiency }})</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>No languages added.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div style="flex: 1; min-width: 45%;">
+
+      <!-- Projects -->
+      <div style="background: gold; color: black; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Projects</div>
+      <div style="padding: 10px;">
+        {% if resume.projects.exists %}
+          {% for proj in resume.projects.all %}
+            <p><strong>{{ proj.title }}</strong></p>
+            {% if proj.url %}<p>URL: {{ proj.url }}</p>{% endif %}
+            <p>{{ proj.description }}</p>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p>No projects added.</p>
+        {% endif %}
+      </div>
+
+      <!-- Technical Skills with Bars -->
+      <div style="background: gold; color: black; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Technical Skills</div>
+      <div style="padding: 10px;">
+        {% for skill in resume.technical_skills.all %}
+  {% if skill.is_visible %}
+    <div style="margin-bottom: 12px;">
+      <div style="display: flex; justify-content: space-between;">
+        <strong>{{ skill.technology.name }}</strong>
+        <span style="font-size: 12px; color: gray;">
+          {% for val, label in skill.PROGRESS_LEVELS %}
+            {% if val == skill.proficiency %}
+              {{ label }}
+            {% endif %}
+          {% endfor %}
+        </span>
+      </div>
+      <div style="background-color: #e0e0e0; border-radius: 5px; height: 10px; width: 100%;">
+        <div style="
+          height: 100%;
+          background-color: #007bff;
+          width: {{ skill.proficiency }}%;
+          border-radius: 5px;
+          transition: width 0.3s;
+        "></div>
+      </div>
+    </div>
+  {% endif %}
+{% empty %}
+  <p>No technical skills added.</p>
+{% endfor %}
+
+  </div>
+
+
+      <!-- Awards -->
+      <div style="background: royalblue; color: white; padding: 10px 15px; font-weight: bold; border-radius: 5px;">Awards</div>
+      <div style="padding: 10px;">
+        {% if resume.awards.exists %}
+          {% for award in resume.awards.all %}
+            <p><strong>{{ award.title }}</strong></p>
+            <p>{{ award.date }} - {{ award.description }}</p>
+            <br>
+          {% endfor %}
+        {% else %}
+          <p>No awards added.</p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
+
+{% comment %} {% extends "resume_base.html" %}
 {% block content %}
 <div class="container my-5 p-4 shadow rounded" style="background-color: #ffffff; max-width: 960px;">
   <!-- Resume Header -->
@@ -98,4 +264,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock %} {% endcomment %}
