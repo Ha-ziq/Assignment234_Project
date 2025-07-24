@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Creative Resume</title>
     <style>
+         @page {
+    size: A4;
+    margin: 1cm;
+  }
+
+  body {
+    zoom: 0.85;
+  }
+
+  .section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -100,7 +113,7 @@
             {% endif %}
         </div>
 
-        <div class="section">
+        {% comment %} <div class="section">
             <h2>Interests</h2>
             {% if resume.interests %}
                 <ul>
@@ -111,18 +124,22 @@
             {% else %}
                 <p class="muted">No interests provided.</p>
             {% endif %}
-        </div>
+        </div> {% endcomment %}
     </div>
 
     <div class="main-content">
-        <h1>CREATIVE</h1>
-        <p class="muted">creative resume</p>
+        <h1 style="text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 10px;">
+    {% if resume.full_name %}{{ resume.full_name }}
+    {% elif resume.user.first_name or resume.user.last_name %}
+      {{ resume.user.first_name }} {{ resume.user.last_name }}
+    {% else %}{{ resume.user.username }}{% endif %}
+  </h1>
 
         <div class="section">
             <h2>Experience</h2>
             {% if resume.work_experiences.exists %}
                 {% for exp in resume.work_experiences.all %}
-                    <p><strong>{{ exp.job_title }}</strong> at {{ exp.company_name }}</p>
+                    <p><strong>{{ exp.job_title }}</strong> at {{ exp.company }}</p>
                     <p>{{ exp.start_date }} - {{ exp.end_date }}</p>
                     <p>{{ exp.description }}</p>
                 {% endfor %}
@@ -136,8 +153,8 @@
             {% if resume.projects.exists %}
                 {% for proj in resume.projects.all %}
                     <p><strong>{{ proj.title }}</strong></p>
-                    {% if proj.url %}<p>{{ proj.url }}</p>{% endif %}
                     <p>{{ proj.description }}</p>
+                    {% if proj.url %}<p>{{ proj.url }}</p>{% endif %}
                 {% endfor %}
             {% else %}
                 <p class="muted">No projects added.</p>
@@ -148,7 +165,7 @@
             <h2>Certifications</h2>
             {% if resume.certifications.exists %}
                 {% for cert in resume.certifications.all %}
-                    <p><strong>{{ cert.name }}</strong> — {{ cert.organization }}</p>
+                    <p><strong>{{ cert.name }}</strong> — {{ cert.issuer }}</p>
                     <p>{{ cert.issue_date }}</p>
                 {% endfor %}
             {% else %}
