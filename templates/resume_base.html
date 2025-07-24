@@ -78,12 +78,47 @@
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
         <a class="nav-link" href="{% url 'dashboard' %}">
-          <i class="bi bi-grid"></i><span>Dashboard</span>
+          <i class="bi bi-grid text-primary"></i><span>Dashboard</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'resume_list' %}">
-          <i class="bi bi-file-earmark-text"></i><span>Resumes</span>
+          <i class="bi bi-file-earmark-text text-success"></i><span>Resumes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'education_list' %}">
+          <i class="bi bi-mortarboard text-danger"></i><span>Education</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'technical_skill_list' %}">
+          <i class="bi bi-gear text-warning"></i><span>Skills</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'project_list' %}">
+          <i class="bi bi-layers text-info"></i><span>Projects</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'certification_list' %}">
+          <i class="bi bi-award text-primary"></i><span>Certifications</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'award_list' %}">
+          <i class="bi bi-trophy text-warning"></i><span>Awards</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'language_list' %}">
+          <i class="bi bi-translate text-danger"></i><span>Language</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'work_experience_list' %}">
+          <i class="bi bi-briefcase text-secondary"></i><span>Work Experience</span>
         </a>
       </li>
       {% comment %} <li class="nav-item">
