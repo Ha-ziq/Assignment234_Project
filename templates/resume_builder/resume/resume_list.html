@@ -10,7 +10,7 @@
     <li class="list-group-item d-flex justify-content-between align-items-center">
       <div>
         <strong>{{ resume.title }}</strong>
-        <p class="mb-0 text-muted small">{{ resume.summary|truncatewords:20 }}</p>
+        <p class="mb-0 text-muted small">{{ resume.summary|truncatewords:10 }}</p>
       </div>
       <div>
         <a href="{% url 'resume_preview' resume.pk %}" class="btn btn-sm btn-success">Preview</a>
